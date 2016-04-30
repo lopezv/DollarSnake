@@ -3,7 +3,7 @@ var Game_Over = {
     preload : function() {
         // Here we load all the needed resources for the level.
         // In our case, that's just two squares - one for the snake body and one for the apple.
-        game.load.image('gameover', './assets/images/gameover.png');
+        game.load.image('gameover', '../../assets/images/gameover.png');
     },
 
     create : function() {
