@@ -1,5 +1,5 @@
 var snake, apple, squareSize, score, speed, total_time, time_left, begin_time, timeTextValue,
-    updateDelay, direction, new_direction,
+    updateDelay, direction, new_direction, lives, early_cash_in_button, snake_length, multiplier,
     addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value;
 
 var TurboSnake = TurboSnake || {};
@@ -14,6 +14,7 @@ TurboSnake.Game.prototype = {
         // In our case, that's just two squares - one for the snake body and one for the apple.
         this.game.load.image('snake', '../assets/images/snake.png');
         this.game.load.image('apple', '../assets/images/apple.png');
+
     },
 
     create : function() {
@@ -26,26 +27,66 @@ TurboSnake.Game.prototype = {
         squareSize = 15;                // The length of a side of the squares. Our image is 15x15 pixels.
         score = 0;                      // Game score.
         speed = 0;                      // Game speed.
-        total_time = 30;                 // Game timer.
-        time_left = total_time;
-        begin_time = (new Date()).getTime();
+        total_time = 30;                // Total number of seconds in the game
+        time_left = total_time;         // Number of seconds left in the game, updates continuously
+        begin_time = (new Date()).getTime();    // time at the start of the game
+        update_diff = 5;                // # of interations before update. more = slower snake, less = faster snake
         updateDelay = 0;                // A variable for control over update rates.
         direction = 'right';            // The direction of our snake.
         new_direction = null;           // A buffer to store the new direction into.
         addNew = false;                 // A variable used when an apple has been eaten.
+        lives = 0;                      // Num lives, can be at most 1.
+        early_cash_in_button = false;   // if you can cash in early or not
+        snake_length = 10;              // default snake length
+        multiplier = 1;                 // multiplier per snake piece
 
         // Set up a Phaser controller for keyboard input.
         cursors = this.game.input.keyboard.createCursorKeys();
 
         this.game.stage.backgroundColor = '#061f27';
 
-        // Generate the initial snake stack. Our snake will be 10 elements long.
-        for(var i = 0; i < 10; i++){
-            snake[i] = this.game.add.sprite(150+i*squareSize, 150, 'snake');  // Parameters are (X coordinate, Y coordinate, image)
+        // Look at which powerups are in effect, decrement accordingly
+        var keys = Object.keys(powerupInfo);
+        for (i = 0; i < keys.legnth; i++) {
+            if (powerupInfo[keys[i]]['count'] > 0) {
+                powerupInfo[keys[i]]['count'] --;
+                switch (keys[i]) {
+                    case 'Slow_Time':
+                        update_diff = 8;            // slows snake, updates slower
+                        break;
+                    case 'Double_Pellets':
+                        this.generateApple();       // makes an extra apple
+                        break;
+                    case 'Life+1':
+                        lives = 1;                  // extra life
+                        break;
+                    case 'Early_Cash_In':
+                        early_cash_in_button = true;   // early cash in button
+                        break;
+                    case 'Longer':
+                        snake_length += 5;          // extra length
+                        break;
+                    case 'Quicker_Better':
+                        multiplier = 1.5;           // each snake pixel worth more
+                        update_diff = 3;            // updates faster, speeds up snake
+                        break;
+                    case 'Double_Time':
+                        total_time *= 2;            // doubles time
+                        time_left = total_time;     // updates time left
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
 
-        // Genereate the first apple.
+        // Generate the initial snake stack. Our snake will be 10 elements long.
+        for(var i = 0; i < snake_length; i++){
+            snake[i] = this.game.add.sprite(150+i*squareSize, 150, 'snake');  // Parameters are (X coordinate, Y coordinate, image)
+        }
+
+        // Genereate an apple.
         this.generateApple();
 
         // Add Text to top of game.
@@ -55,9 +96,11 @@ TurboSnake.Game.prototype = {
         // Score.
         this.game.add.text(30, 20, "SCORE", textStyle_Key);
         scoreTextValue = this.game.add.text(90, 18, score.toString(), textStyle_Value);
+        
         // Speed.
         //game.add.text(500, 20, "SPEED", textStyle_Key);
         //speedTextValue = game.add.text(558, 18, speed.toString(), textStyle_Value);
+
         // Time.
         this.game.add.text(455, 20, "TIME LEFT", textStyle_Key);
         timeTextValue = this.game.add.text(540, 18, time_left.toString(), textStyle_Value);
@@ -106,7 +149,7 @@ TurboSnake.Game.prototype = {
         // Increase a counter on every update call.
         updateDelay++;
 
-        if (updateDelay % 5 == 0) {
+        if (updateDelay % update_diff == 0) {
 
 
             // Snake movement
@@ -126,7 +169,6 @@ TurboSnake.Game.prototype = {
             // Change the last cell's coordinates relative to the head of the snake, according to the direction.
 
             if(direction == 'right'){
-
                 lastCell.x = firstCell.x + 15;
                 lastCell.y = firstCell.y;
             }

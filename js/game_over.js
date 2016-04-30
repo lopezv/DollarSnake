@@ -21,6 +21,11 @@ TurboSnake.Game_Over.prototype = {
         if (score > 0) {
             final_score +=  ',000';
         }
+/*
+        var earned_money = '$' + (score * multiplier).toString();
+        if (earned_money > 0) {
+            earned_money += ',000';
+        }*/
 
         console.log(final_score);
 
