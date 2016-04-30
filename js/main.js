@@ -1,6 +1,6 @@
 var TurboSnake = TurboSnake || {};
 
-TurboSnake.game = new Phaser.Game(16*48, 768, Phaser.AUTO, '');
+TurboSnake.game = new Phaser.Game(600, 450, Phaser.AUTO, '');
 
 var credit = 5000,
 	debt = 50000,
