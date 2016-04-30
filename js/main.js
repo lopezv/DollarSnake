@@ -23,5 +23,8 @@ TurboSnake.game.state.add('Computer_Menu', TurboSnake.Computer_Menu);
 TurboSnake.game.state.add('Buy_Menu', TurboSnake.Buy_Menu);
 TurboSnake.game.state.add('Finance_Menu', TurboSnake.Finance_Menu);
 TurboSnake.game.state.add('Home', TurboSnake.Home);
+TurboSnake.game.state.add('Menu', Menu);
+TurboSnake.game.state.add('Game', Game);
+TurboSnake.game.state.add('Game_Over', Game_Over);
 
 TurboSnake.game.state.start('Preload');
