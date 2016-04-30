@@ -9,7 +9,7 @@ TurboSnake.Home = function() {
 
         this.safetile = 1;
         this.gridsize = 16;
-        this.blocksize = 48;
+        this.blocksize = 30;
 };
 
 TurboSnake.Home.prototype = {
