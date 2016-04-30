@@ -10,7 +10,7 @@ TurboSnake.Buy_Menu.prototype = {
         var self = this;
         avaliablePowerups.forEach(function(power, ind){
 	        button = self.game.add.button(16, 500 + 50*ind, power + '_button', self.buy(power), self);
-	        button_debt = self.game.add.button(50, 500 + 50*ind, power + '_debt_button', self.debt(power), self);
+	        button_debt = self.game.add.button(200, 500 + 50*ind, power + '_debt_button', self.debt(power), self);
         });
         
         this.cursors = {};

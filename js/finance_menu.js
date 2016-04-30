@@ -1,12 +1,15 @@
 var TurboSnake = TurboSnake || {};
 
-TurboSnake.Finance_Menu = function() {};
+TurboSnake.Finance_Menu = function() {
+    this.creditString = 'Your current credit is : ';
+    this.debtString = 'Your current debt is : ';
+};
 
 TurboSnake.Finance_Menu.prototype = {
     create: function() {
         this.game.stage.backgroundColor = '#707070';
-        this.game.add.text(20,50, 'Your current credit is : ' + credit, {font:'14px Arial', fill: '#fff'});
-        this.game.add.text(20, 90, 'Your current debt is : ' + debt, {font: '14px Arial', fill: '#fff'}); 
+        this.creditText = this.game.add.text(20,50, this.creditString + credit, {font:'14px Arial', fill: '#fff'});
+        this.debtText = this.game.add.text(20, 90, this.debtString + debt, {font: '14px Arial', fill: '#fff'}); 
 
         button_pay = this.game.add.button(16, 500, 'pay_button', this.pay_debt, this);
         
@@ -18,9 +21,13 @@ TurboSnake.Finance_Menu.prototype = {
         if(this.cursors.space.isDown) {
             this.game.state.start('Computer_Menu');
         }
+
+        this.creditText.text = this.creditString + credit;
+        this.debtText.text = this.debtString + debt;
     },
     pay_debt: function() {
+        var init_credit = credit;
         credit = Math.max(0, credit - debt);
-        debt = Math.max(0, debt-credit);
+        debt = Math.max(0, debt-init_credit);
     }
 };

@@ -2,8 +2,8 @@ var TurboSnake = TurboSnake || {};
 
 TurboSnake.game = new Phaser.Game(16*48, 768, Phaser.AUTO, '');
 
-var credit = 0,
-	debt = 0,
+var credit = 5000,
+	debt = 50000,
 	powerupsArr = ['Slow_Time', 'Double_Pellets', 'Life+1', 'Early_Cash_In', 'Longer', 'Quicker_Better', 'Double_Time'],
 	startX = 96, startY = 96,
 	avaliablePowerups = [],
