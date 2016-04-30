@@ -1,136 +1,110 @@
-var game = new Phaser.Game(790, 470, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var TurboSnake = TurboSnake || {};
 
-function preload() {
+TurboSnake.Home = function() {
+        this.map = null;
+        this.floor = null;
+        this.walls = null;
+        this.computer = null;
+        this.snake = null;
 
-    game.load.image('home', 'assets/home.png');
-    game.load.image('ground', 'assets/platform.png');
-    game.load.image('star', 'assets/star.png');
-    game.load.spritesheet('snake', 'assets/snake.png', 48, 48);
+        this.safetile = 1;
+        this.gridsize = 16;
+        this.blocksize = 48;
+};
 
-}
+TurboSnake.Home.prototype = {
 
-var player;
-var platforms;
-var cursors;
+    init: function () {
+        	this.physics.startSystem(Phaser.Physics.ARCADE);
+    },
+	getRandomPowerUps: function() {
+		    var size=3, shuffled = powerupsArr.slice(0), i = powerupsArr.length, min = i - size, temp, index;
+		    while (i-- > min) {
+		        index = Math.floor((i + 1) * Math.random());
+		        temp = shuffled[index];
+		        shuffled[index] = shuffled[i];
+		        shuffled[i] = temp;
+		    }
+		    return shuffled.slice(min);
+	},
 
-var stars;
-var score = 0;
-var scoreText;
+    create: function() {
+            this.map = this.add.tilemap('map');
+            this.map.addTilesetImage('TilesSet', 'tiles');
+            this.map.addTilesetImage('computer', 'computer')
 
-function create() {
+            this.floor = this.map.createLayer('Tile Layer 1');
+            this.walls = this.map.createLayer('Tile Layer 2');
+            this.computer = this.map.createLayer('Tile Layer 3');
 
-    //  We're going to be using physics, so enable the Arcade Physics system
-    game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    //  A simple background for our game
-    game.add.sprite(0, 0, 'home');
+            this.map.setCollisionByExclusion([0],true,this.walls);
+            this.map.setCollisionByExclusion([0],true,this.computer);
 
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = game.add.group();
 
-    //  We will enable physics for any object that is created in this group
-    platforms.enableBody = true;
+            this.snake = this.add.sprite(startX, startY, 'snake');
+            this.snake.anchor.set(0.5);
+		    this.snake.animations.add('left', [4, 5, 6, 7], 10, true);
+		    this.snake.animations.add('right', [8, 9, 10, 11], 10, true);
+		    this.snake.animations.add('down', [0, 1, 2, 3], 10, true);
+    		this.snake.animations.add('up', [12, 13, 14, 15], 10, true);
 
-    // Here we create the ground.
-    var ground = platforms.create(0, game.world.height - 64);
-/*
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    ground.scale.setTo(2, 2);
+            this.physics.arcade.enable(this.snake);
+            this.snake.body.collideWorldBounds = true;
 
-    //  This stops it from falling away when you jump on it
-    ground.body.immovable = true;
+            this.cursors = this.input.keyboard.createCursorKeys();
+            this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-    //  Now let's create two ledges
-    var ledge = platforms.create(400, 400);
-    ledge.body.immovable = true;
+          	avaliablePowerups = this.getRandomPowerUps();
 
-    ledge = platforms.create(-150, 250);
-    ledge.body.immovable = true;
-*/
-    // The player and its settings
-    player = game.add.sprite(32, game.world.height - 150, 'snake');
+    },
+    move: function(){
+	    this.snake.body.velocity.x = 0;
+	    this.snake.body.velocity.y = 0;
 
-    //  We need to enable physics on the player
-    game.physics.arcade.enable(player);
+	    if (this.cursors.left.isDown)
+	    {
+	        this.snake.body.velocity.x = -150;
+	        this.snake.animations.play('left');
+	    }
+	    else if (this.cursors.right.isDown)
+	    {
+	        this.snake.body.velocity.x = 150;
+	        this.snake.animations.play('right');
+	    }
+	    else if (this.cursors.up.isDown)
+	    {
+	        this.snake.body.velocity.y = -150;
+	        this.snake.animations.play('up');
+	    }
+	    else if (this.cursors.down.isDown)
+	    {
+	        this.snake.body.velocity.y = 150;
+	        this.snake.animations.play('down');
+	    }
+	    else
+	    {
+	        this.snake.animations.stop();
+	    }
 
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.body.collideWorldBounds = true;
+	    if(this.cursors.space.isDown){
 
-    //  Our two animations, walking left and right.
-    player.animations.add('left', [4, 5, 6, 7], 10, true);
-    player.animations.add('right', [8, 9, 10, 11], 10, true);
-    player.animations.add('down', [0, 1, 2, 3], 10, true);
-    player.animations.add('up', [12, 13, 14, 15], 10, true);
+	    	startX = Math.floor(this.snake.x);
+	    	startY = Math.floor(this.snake.y);
+	    	
+	        this.state.start('Computer_Menu');
+	    }
 
-    //  Our controls.
-    cursors = game.input.keyboard.createCursorKeys();
-    
-}
+    },
+    update: function () {
+          
+            this.physics.arcade.collide(this.snake, this.walls);
+            this.physics.arcade.collide(this.snake, this.computer);
 
-function update() {
+            this.move();
 
-    //  Collide the player and the stars with the platforms
-    game.physics.arcade.collide(player, platforms);
-    game.physics.arcade.collide(stars, platforms);
+	},
 
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    game.physics.arcade.overlap(player, stars, collectStar, null, this);
+};
 
-    //  Reset the players velocity (movement)
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
 
-    if (cursors.left.isDown)
-    {
-        //  Move to the left
-        player.body.velocity.x = -150;
-
-        player.animations.play('left');
-    }
-    else if (cursors.right.isDown)
-    {
-        //  Move to the right
-        player.body.velocity.x = 150;
-
-        player.animations.play('right');
-    }
-    else if (cursors.up.isDown)
-    {
-        //  Move to the right
-        player.body.velocity.y = -150;
-
-        player.animations.play('up');
-    }
-    else if (cursors.down.isDown)
-    {
-        //  Move to the right
-        player.body.velocity.y = 150;
-
-        player.animations.play('down');
-    }
-    else
-    {
-        //  Stand still
-        player.animations.stop();
-
-//        player.frame = 10;
-    }
-    
-    //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && player.body.touching.down)
-    {
-        player.body.velocity.y = -350;
-    }
-
-}
-
-function collectStar (player, star) {
-    
-    // Removes the star from the screen
-    star.kill();
-
-    //  Add and update the score
-    score += 10;
-    scoreText.text = 'Score: ' + score;
-
-}
