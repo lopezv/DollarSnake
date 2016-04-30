@@ -15,6 +15,16 @@ var credit = 5000,
 		'Longer' : {'cost': 1000, 'count' : 0},
 		'Quicker_Better'  : {'cost': 1000, 'count' : 0},
 		'Double_Time' : {'cost': 1000, 'count' : 0}
+	},
+	getRandomPowerUps = function() {
+	    var size=3, shuffled = powerupsArr.slice(0), i = powerupsArr.length, min = i - size, temp, index;
+	    while (i-- > min) {
+	        index = Math.floor((i + 1) * Math.random());
+	        temp = shuffled[index];
+	        shuffled[index] = shuffled[i];
+	        shuffled[i] = temp;
+	    }
+       	avaliablePowerups = shuffled.slice(min);		    
 	};
         
 
@@ -23,8 +33,8 @@ TurboSnake.game.state.add('Computer_Menu', TurboSnake.Computer_Menu);
 TurboSnake.game.state.add('Buy_Menu', TurboSnake.Buy_Menu);
 TurboSnake.game.state.add('Finance_Menu', TurboSnake.Finance_Menu);
 TurboSnake.game.state.add('Home', TurboSnake.Home);
-TurboSnake.game.state.add('Menu', Menu);
-TurboSnake.game.state.add('Game', Game);
-TurboSnake.game.state.add('Game_Over', Game_Over);
+TurboSnake.game.state.add('Menu', TurboSnake.Menu);
+TurboSnake.game.state.add('Game', TurboSnake.Game);
+TurboSnake.game.state.add('Game_Over', TurboSnake.Game_Over);
 
 TurboSnake.game.state.start('Preload');

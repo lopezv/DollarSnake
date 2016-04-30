@@ -1,9 +1,15 @@
-var Game_Over = {
+var TurboSnake = TurboSnake || {};
+
+TurboSnake.Game_Over = function() {};
+
+
+TurboSnake.Game_Over.prototype = {
+
 
     preload : function() {
         // Here we load all the needed resources for the level.
         // In our case, that's just two squares - one for the snake body and one for the apple.
-        game.load.image('gameover', '../../assets/images/gameover.png');
+        this.game.load.image('gameover', '../assets/images/gameover.png');
     },
 
     create : function() {
@@ -19,8 +25,8 @@ var Game_Over = {
         console.log(final_score);
 
         // Last Score Info.
-        game.add.text(210, 350, "YOU EARNED", { font: "bold 16px sans-serif", fill: "#46c0f9", align: "center"});
-        game.add.text(340, 350, final_score.toString(), { font: "bold 16px sans-serif", fill: "#fff", align: "center" });
+        this.game.add.text(210, 350, "YOU EARNED", { font: "bold 16px sans-serif", fill: "#46c0f9", align: "center"});
+        this.game.add.text(340, 350, final_score.toString(), { font: "bold 16px sans-serif", fill: "#fff", align: "center" });
 
     },
 

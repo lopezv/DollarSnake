@@ -17,17 +17,6 @@ TurboSnake.Home.prototype = {
     init: function () {
         	this.physics.startSystem(Phaser.Physics.ARCADE);
     },
-	getRandomPowerUps: function() {
-		    var size=3, shuffled = powerupsArr.slice(0), i = powerupsArr.length, min = i - size, temp, index;
-		    while (i-- > min) {
-		        index = Math.floor((i + 1) * Math.random());
-		        temp = shuffled[index];
-		        shuffled[index] = shuffled[i];
-		        shuffled[i] = temp;
-		    }
-		    return shuffled.slice(min);
-	},
-
     create: function() {
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('TilesSet', 'tiles');
@@ -54,8 +43,6 @@ TurboSnake.Home.prototype = {
 
             this.cursors = this.input.keyboard.createCursorKeys();
             this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-          	avaliablePowerups = this.getRandomPowerUps();
 
     },
     move: function(){
@@ -96,6 +83,13 @@ TurboSnake.Home.prototype = {
 	    }
 
     },
+    getCoors: function() {
+		var x = Phaser.Math.snapToFloor(Math.floor(this.snake.x), this.blocksize)/ this.blocksize,
+			y = Phaser.Math.snapToFloor(Math.floor(this.snake.y), this.blocksize)/ this.blocksize;
+
+		return {x:x,y:y}
+
+    },
     update: function () {
           
             this.physics.arcade.collide(this.snake, this.walls);
@@ -103,6 +97,10 @@ TurboSnake.Home.prototype = {
 
             this.move();
 
+            var coors = this.getCoors();
+            if(coors.y == 14 && (coors.x == 7 || coors.x==8 ||coors.x ==9)){
+	        	this.state.start('Menu');
+            }
 	},
 
 };

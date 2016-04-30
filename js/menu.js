@@ -1,8 +1,13 @@
-var Menu = {
+var TurboSnake = TurboSnake || {};
+
+TurboSnake.Menu = function() {};
+
+
+TurboSnake.Menu.prototype = {
 
     preload : function() {
         // Load all the needed resources for the menu.
-        game.load.image('menu', '../../assets/images/menu.png');
+        this.game.load.image('menu', '../assets/images/menu.png');
     },
 
     create: function () {

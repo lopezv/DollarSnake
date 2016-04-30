@@ -2,13 +2,18 @@ var snake, apple, squareSize, score, speed, total_time, time_left, begin_time, t
     updateDelay, direction, new_direction,
     addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value;
 
-var Game = {
+var TurboSnake = TurboSnake || {};
+
+TurboSnake.Game = function() {};
+
+
+TurboSnake.Game.prototype = {
 
     preload : function() {
         // Here we load all the needed resources for the level.
         // In our case, that's just two squares - one for the snake body and one for the apple.
-        game.load.image('snake', '../../assets/images/snake.png');
-        game.load.image('apple', '../../assets/images/apple.png');
+        this.game.load.image('snake', '../assets/images/snake.png');
+        this.game.load.image('apple', '../assets/images/apple.png');
     },
 
     create : function() {
@@ -30,13 +35,13 @@ var Game = {
         addNew = false;                 // A variable used when an apple has been eaten.
 
         // Set up a Phaser controller for keyboard input.
-        cursors = game.input.keyboard.createCursorKeys();
+        cursors = this.game.input.keyboard.createCursorKeys();
 
-        game.stage.backgroundColor = '#061f27';
+        this.game.stage.backgroundColor = '#061f27';
 
         // Generate the initial snake stack. Our snake will be 10 elements long.
         for(var i = 0; i < 10; i++){
-            snake[i] = game.add.sprite(150+i*squareSize, 150, 'snake');  // Parameters are (X coordinate, Y coordinate, image)
+            snake[i] = this.game.add.sprite(150+i*squareSize, 150, 'snake');  // Parameters are (X coordinate, Y coordinate, image)
         }
 
 
@@ -48,14 +53,14 @@ var Game = {
         textStyle_Value = { font: "bold 18px sans-serif", fill: "#fff", align: "center" };
 
         // Score.
-        game.add.text(30, 20, "SCORE", textStyle_Key);
-        scoreTextValue = game.add.text(90, 18, score.toString(), textStyle_Value);
+        this.game.add.text(30, 20, "SCORE", textStyle_Key);
+        scoreTextValue = this.game.add.text(90, 18, score.toString(), textStyle_Value);
         // Speed.
         //game.add.text(500, 20, "SPEED", textStyle_Key);
         //speedTextValue = game.add.text(558, 18, speed.toString(), textStyle_Value);
         // Time.
-        game.add.text(455, 20, "TIME LEFT", textStyle_Key);
-        timeTextValue = game.add.text(540, 18, time_left.toString(), textStyle_Value);
+        this.game.add.text(455, 20, "TIME LEFT", textStyle_Key);
+        timeTextValue = this.game.add.text(540, 18, time_left.toString(), textStyle_Value);
 
     },
 
@@ -91,7 +96,7 @@ var Game = {
         time_dif = (curr_time - begin_time)/1000.;
         time_left = total_time - time_dif;
         if (time_left < 0) {
-            game.state.start('Game_Over');
+            this.game.state.start('Game_Over');
         }
         timeTextValue.text = '' + Math.ceil(time_left);
 
@@ -152,7 +157,7 @@ var Game = {
             // Increase length of snake if an apple had been eaten.
             // Create a block in the back of the snake with the old position of the previous last block (it has moved now along with the rest of the snake).
             if(addNew){
-                snake.unshift(game.add.sprite(oldLastCellx, oldLastCelly, 'snake'));
+                snake.unshift(this.game.add.sprite(oldLastCellx, oldLastCelly, 'snake'));
                 addNew = false;
             }
 
@@ -179,7 +184,7 @@ var Game = {
             randomY = Math.floor(Math.random() * 30 ) * squareSize;
 
         // Add a new apple.
-        apple = game.add.sprite(randomX, randomY, 'apple');
+        apple = this.game.add.sprite(randomX, randomY, 'apple');
     },
 
     appleCollision: function() {
@@ -216,7 +221,7 @@ var Game = {
             if(head.x == snake[i].x && head.y == snake[i].y){
 
                 // If so, go to game over screen.
-                game.state.start('Game_Over');
+                this.game.state.start('Game_Over');
             }
         }
 
@@ -230,7 +235,7 @@ var Game = {
 
 
             // If it's not in, we've hit a wall. Go to game over screen.
-            game.state.start('Game_Over');
+            this.game.state.start('Game_Over');
         }
 
     }
