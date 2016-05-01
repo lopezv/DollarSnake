@@ -31,7 +31,7 @@ TurboSnake.Home.prototype = {
             this.map.setCollisionByExclusion([0],true,this.computer);
 
 
-            this.snake = this.add.sprite(startX, startY, 'snake');
+            this.snake = this.add.sprite(startX, startY, 'snake_home');
             this.snake.anchor.set(0.5);
 		    this.snake.animations.add('left', [4, 5, 6, 7], 10, true);
 		    this.snake.animations.add('right', [8, 9, 10, 11], 10, true);

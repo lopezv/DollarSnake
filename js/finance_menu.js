@@ -16,7 +16,7 @@ TurboSnake.Finance_Menu.prototype = {
         button_pay.scale.y = .5;
         
         this.cursors = {};
-        this.cursors.space = this.input.keyboard.addKey(32);
+        this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
     },
     update: function() {
