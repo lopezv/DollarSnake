@@ -98,7 +98,7 @@ TurboSnake.Home.prototype = {
             this.move();
 
             var coors = this.getCoors();
-            if(coors.y == 14 && (coors.x == 7 || coors.x==8 ||coors.x ==9)){
+            if(coors.y == 14 && (coors.x == 10 || coors.x==8 ||coors.x ==9)){
 	        	this.state.start('Menu');
             }
 	},

@@ -11,7 +11,9 @@ TurboSnake.Finance_Menu.prototype = {
         this.creditText = this.game.add.text(20,50, this.creditString + credit, {font:'14px Arial', fill: '#fff'});
         this.debtText = this.game.add.text(20, 90, this.debtString + debt, {font: '14px Arial', fill: '#fff'}); 
 
-        button_pay = this.game.add.button(16, 500, 'pay_button', this.pay_debt, this);
+        var button_pay = this.game.add.button(100, 200, 'pay_debt_button', this.pay_debt, this);
+        button_pay.scale.x = .5;
+        button_pay.scale.y = .5;
         
         this.cursors = {};
         this.cursors.space = this.input.keyboard.addKey(32);
