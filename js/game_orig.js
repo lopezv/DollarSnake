@@ -1,6 +1,6 @@
 var snake, apple, squareSize, score, speed, total_time, time_left, begin_time, timeTextValue,
     updateDelay, direction, new_direction, lives, early_cash_in_button, snake_length, multiplier,
-    addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value;
+    addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value, pause;
 
 var TurboSnake = TurboSnake || {};
 
@@ -47,9 +47,14 @@ TurboSnake.Game.prototype = {
 
         // Look at which powerups are in effect, decrement accordingly
         var keys = Object.keys(powerupInfo);
-        for (i = 0; i < keys.legnth; i++) {
+        console.log(keys);
+        console.log(powerupInfo['Life+1']);
+        console.log(keys.length);
+        for (i = 0; i < keys.length; i++) {
+            console.log(powerupInfo[keys[i]]['count']);
             if (powerupInfo[keys[i]]['count'] > 0) {
-                powerupInfo[keys[i]]['count'] --;
+                console.log(keys[i]);
+                powerupInfo[keys[i]]['count']--;
                 switch (keys[i]) {
                     case 'Slow_Time':
                         update_diff = 8;            // slows snake, updates slower
@@ -151,7 +156,6 @@ TurboSnake.Game.prototype = {
 
         if (updateDelay % update_diff == 0) {
 
-
             // Snake movement
 
             var firstCell = snake[snake.length - 1],
@@ -203,14 +207,18 @@ TurboSnake.Game.prototype = {
                 addNew = false;
             }
 
-            // Check for apple collision.
-            this.appleCollision();
+            if (pause) {
+                pause = false;
+            } else {
+                // Check for apple collision.
+                this.appleCollision();
 
-            // Check for collision with self. Parameter is the head of the snake.
-            this.selfCollision(firstCell);
+                // Check for collision with self. Parameter is the head of the snake.
+                this.selfCollision(firstCell);
 
-            // Check with collision with wall. Parameter is the head of the snake.
-            this.wallCollision(firstCell);
+                // Check with collision with wall. Parameter is the head of the snake.
+                this.wallCollision(firstCell);
+            }
         }
 
 
@@ -261,9 +269,14 @@ TurboSnake.Game.prototype = {
         // Check if the head of the snake overlaps with any part of the snake.
         for(var i = 0; i < snake.length - 1; i++){
             if(head.x == snake[i].x && head.y == snake[i].y){
-
-                // If so, go to game over screen.
-                this.game.state.start('Game_Over');
+                if (lives > 0) {
+                    lives --;
+                    pause = true;
+                    console.log('you crashed yo self');
+                } else {
+                    // If so, go to game over screen.
+                    this.game.state.start('Game_Over');
+                }
             }
         }
 
@@ -274,10 +287,18 @@ TurboSnake.Game.prototype = {
         // Check if the head of the snake is in the boundaries of the game field.
 
         if(head.x >= 600 || head.x < 0 || head.y >= 450 || head.y < 0){
+            if (lives > 0) {
+                    lives --;
+                    directions = ['right', 'up', 'left', 'down'];
+                    index = directions.indexOf(direction);
+                    new_direction = directions[(index+1)%4];
+                    pause = true;
+                    console.log(new_direction);
+                } else {
+                    // If so, go to game over screen.
+                    this.game.state.start('Game_Over');
+                }
 
-
-            // If it's not in, we've hit a wall. Go to game over screen.
-            this.game.state.start('Game_Over');
         }
 
     }

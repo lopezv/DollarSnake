@@ -36,9 +36,17 @@ TurboSnake.Game_Over.prototype = {
     },
 
     startGame: function () {
+        // increase debt
+        debt *= 1.1;
+
+        // increase credit
+        credit += score*1000;
+
+        // generate new powerups
+        getRandomPowerUps();
 
         // Change the state to the actual game.
-        this.state.start('Game');
+        this.state.start('Home');
 
     }
 
