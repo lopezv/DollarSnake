@@ -45,7 +45,9 @@ TurboSnake.Game_Over.prototype = {
 
     startGame: function () {
         // increase debt
+        console.log(debt);
         debt *= 1.1;
+        console.log(debt);
 
         // increase credit
         credit += score*1000;

@@ -54,7 +54,7 @@ TurboSnake.Game.prototype = {
                 powerupInfo[keys[i]]['count']--;
                 switch (keys[i]) {
                     case 'Slow_Time':
-                        update_diff = 8;            // slows snake, updates slower
+                        update_diff += 3;            // slows snake, updates slower
                         break;
                     case 'Double_Pellets':
                         this.generateApple();       // makes an extra apple
@@ -70,7 +70,7 @@ TurboSnake.Game.prototype = {
                         break;
                     case 'Quicker_Better':
                         multiplier = 1500;           // each snake pixel worth more
-                        update_diff = 3;            // updates faster, speeds up snake
+                        update_diff -= 3;            // updates faster, speeds up snake
                         break;
                     case 'Double_Time':
                         total_time *= 2;            // doubles time
@@ -128,19 +128,19 @@ TurboSnake.Game.prototype = {
 
         // Handle arrow key presses, while not allowing illegal direction changes that will kill the player.
         if (!pause){
-            if (cursors.right.isDown && direction!='left')
+            if (cursors.right.isDown && direction!='left' && direction!='right')
             {
                 new_direction = 'right';
             }
-            else if (cursors.left.isDown && direction!='right')
+            else if (cursors.left.isDown && direction!='right' && direction!='left')
             {
                 new_direction = 'left';
             }
-            else if (cursors.up.isDown && direction!='down')
+            else if (cursors.up.isDown && direction!='down' && direction!='up')
             {
                 new_direction = 'up';
             }
-            else if (cursors.down.isDown && direction!='up')
+            else if (cursors.down.isDown && direction!='up' && direction!='down')
             {
                 new_direction = 'down';
             }
@@ -250,7 +250,8 @@ TurboSnake.Game.prototype = {
             randomY = Math.floor(Math.random() * 27 + 3) * squareSize;
 
         // Add a new apple.
-        apples.push(this.game.add.sprite(randomX, randomY, 'apple'));
+        var apple = this.game.add.sprite(randomX, randomY, 'apple');
+        apples.push(apple);
     },
 
     appleCollision: function() {
