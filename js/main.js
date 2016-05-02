@@ -4,16 +4,17 @@ TurboSnake.game = new Phaser.Game(600, 450, Phaser.AUTO, '');
 
 var credit = 5000,
 	debt = 50000,
-	startX = 96, startY = 96,
+	startX = 300, startY = 400,
 	avaliablePowerups = [],
 	powerupInfo = {
-		'Slow_Time' : {'cost': 1000, 'count' : 0, 'name': 'Slow Time'},
-		'Double_Pellets' : {'cost': 2000, 'count' : 0, 'name' : 'Double Pellets'},
-		'Life+1' : {'cost': 3000, 'count' : 0, 'name' : ' Life + 1'},
-		'Early_Cash_In' : {'cost': 4000, 'count' : 0, 'name' : 'Early Cash In'},
-		'Longer' : {'cost': 3000, 'count' : 0, 'name' : 'Begin Longer'},
-		'Quicker_Better'  : {'cost': 4000, 'count' : 0, 'name' : 'Move Quicker, Gain More'},
-		'Double_Time' : {'cost': 4000, 'count' : 0, 'name' :'Double Play Time'}
+		// TODO: implement EARLY CASH IN
+		'Slow_Time' : {'cost': 1000, 'count' : 0, 'name': 'SLOW TIME'},
+		'Double_Pellets' : {'cost': 2000, 'count' : 0, 'name' : 'DOUBLE PELLETS'},
+		'Life+1' : {'cost': 3000, 'count' : 0, 'name' : ' LIFE + 1'},
+		'Early_Cash_In' : {'cost': 4000, 'count' : 0, 'name' : 'EARLY CASH IN'},
+		'Longer' : {'cost': 3000, 'count' : 0, 'name' : 'BEGIN LONGER'},
+		'Quicker_Better'  : {'cost': 4000, 'count' : 0, 'name' : 'MOVER QUICKER GAIN MORE'},
+		'Double_Time' : {'cost': 4000, 'count' : 0, 'name' :'DOUBLE PLAY TIME'}
 	},
 	powerupsArr = Object.keys(powerupInfo),
 	getRandomPowerUps = function() {
