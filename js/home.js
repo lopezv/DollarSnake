@@ -18,6 +18,7 @@ TurboSnake.Home.prototype = {
         	this.physics.startSystem(Phaser.Physics.ARCADE);
     },
     create: function() {
+
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('TilesSet', 'tiles');
             this.map.addTilesetImage('computer', 'computer')
@@ -30,6 +31,7 @@ TurboSnake.Home.prototype = {
             this.map.setCollisionByExclusion([0],true,this.walls);
             this.map.setCollisionByExclusion([0],true,this.computer);
 
+	        this.add.text(10,40, 'Your net worth : ' + (credit - debt), {font:'14px Arial', fill: '#fff'});
 
             this.snake = this.add.sprite(startX, startY, 'snake_home');
             this.snake.anchor.set(0.5);
@@ -93,7 +95,9 @@ TurboSnake.Home.prototype = {
     update: function () {
           
             this.physics.arcade.collide(this.snake, this.walls);
-            this.physics.arcade.collide(this.snake, this.computer);
+            if(this.physics.arcade.collide(this.snake, this.computer)){
+		        this.state.start('Computer_Menu');
+            }
 
             this.move();
 

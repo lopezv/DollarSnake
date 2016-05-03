@@ -1,13 +1,14 @@
 var TurboSnake = TurboSnake || {};
 
 TurboSnake.Finance_Menu = function() {
-    this.creditString = 'Your current credit is : ';
-    this.debtString = 'Your current debt is : ';
+    this.creditString = 'Your current credit is : $';
+    this.debtString = 'Your current debt is : $';
 };
 
 TurboSnake.Finance_Menu.prototype = {
     create: function() {
         this.game.stage.backgroundColor = '#707070';
+        this.game.add.text(10,10, '< Press space to go back.', {font:'14px Arial', fill: '#fff'});        
         this.creditText = this.game.add.text(20,50, this.creditString + credit, {font:'14px Arial', fill: '#fff'});
         this.debtText = this.game.add.text(20, 90, this.debtString + debt, {font: '14px Arial', fill: '#fff'}); 
 

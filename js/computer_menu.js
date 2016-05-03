@@ -5,6 +5,9 @@ TurboSnake.Computer_Menu = function() {};
 TurboSnake.Computer_Menu.prototype = {
     create: function() {
         this.game.stage.backgroundColor = '#707070';
+
+        this.game.add.text(10,10, '< Press space to go back.', {font:'14px Arial', fill: '#fff'});
+
         this.game.add.text(20,50, 'View Finances\n', {font:'14px Arial', fill: '#fff'});
         this.game.add.text(20, 90, 'Buy Upgrades', {font: '14px Arial', fill: '#fff'}); 
 
@@ -12,11 +15,8 @@ TurboSnake.Computer_Menu.prototype = {
         button_finance.scale.x = .5;
         button_finance.scale.y = .5;
 
-
-
         var button_buy = this.game.add.button(300, 200, 'buy_button', this.buy, this);
-        button_buy.scale.x = .5;
-        button_buy.scale.y = .5;
+        button_buy.scale.setTo(.5);
 
         this.cursors = {};
         this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
