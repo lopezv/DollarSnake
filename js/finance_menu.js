@@ -8,9 +8,10 @@ TurboSnake.Finance_Menu = function() {
 TurboSnake.Finance_Menu.prototype = {
     create: function() {
         this.game.stage.backgroundColor = '#707070';
+
         this.game.add.text(10,10, '< Press space to go back.', {font:'14px Arial', fill: '#fff'});        
-        this.creditText = this.game.add.text(20,50, this.creditString + credit, {font:'14px Arial', fill: '#fff'});
-        this.debtText = this.game.add.text(20, 90, this.debtString + debt, {font: '14px Arial', fill: '#fff'}); 
+        this.creditText = this.game.add.text(20,50, this.creditString + '$ '+(credit).formatMoney(2), {font:'14px Arial', fill: '#fff'});
+        this.debtText = this.game.add.text(20, 90, this.debtString + '$ '+ (debt).formatMoney(2), {font: '14px Arial', fill: '#fff'}); 
 
         var button_pay = this.game.add.button(100, 200, 'pay_debt_button', this.pay_debt, this);
         button_pay.scale.x = .5;
@@ -25,8 +26,8 @@ TurboSnake.Finance_Menu.prototype = {
             this.game.state.start('Computer_Menu');
         }
 
-        this.creditText.text = this.creditString + credit;
-        this.debtText.text = this.debtString + debt;
+        this.creditText.text = this.creditString +'$ '+(credit).formatMoney(2);
+        this.debtText.text = this.debtString + '$ '+ (debt).formatMoney(2);
     },
     pay_debt: function() {
         var init_credit = credit;
