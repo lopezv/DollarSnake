@@ -9,6 +9,7 @@ TurboSnake.Buy_Menu.prototype = {
     create: function() {
         var self = this;
         this.game.stage.backgroundColor = '#707070';
+        this.game.add.text(10,10, '< Press space to go back.', {font:'14px Arial', fill: '#fff'});        
         this.intro = this.game.add.text(20,50, this.intro_string + credit , {font:'14px Arial', fill: '#fff'});
 
 
