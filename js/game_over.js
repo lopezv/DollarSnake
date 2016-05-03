@@ -9,7 +9,7 @@ TurboSnake.Game_Over.prototype = {
     preload : function() {
         // Here we load all the needed resources for the level.
         // In our case, that's just two squares - one for the snake body and one for the apple.
-        this.game.load.image('gameover', '../assets/images/gameover.png');
+        this.game.load.image('gameover', './assets/images/gameover.png');
     },
 
     create : function() {
@@ -45,9 +45,7 @@ TurboSnake.Game_Over.prototype = {
 
     startGame: function () {
         // increase debt
-        console.log(debt);
         debt *= 1.1;
-        console.log(debt);
 
         // increase credit
         credit += score*1000;

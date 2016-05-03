@@ -1,4 +1,4 @@
-var snake, squareSize, score, speed, total_time, time_left, begin_time, timeTextValue, game_over_reason,
+var snake, squareSize, score, speed, total_time, time_left, begin_time, timeTextValue, game_over_reason, heart,
     updateDelay, direction, new_direction, lives, early_cash_in_button, snake_length, multiplier, multiplierTextValue,
     addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value, pause, line1, items, apples;
 
@@ -10,25 +10,24 @@ TurboSnake.Game = function() {};
 TurboSnake.Game.prototype = {
 
     preload : function() {
-        this.game.load.image('snake', '../assets/images/snake.png');
-        this.game.load.image('apple', '../assets/images/apple.png');
-        this.game.load.image('empty_heart', '../assets/images/empty_heart.png');
-        this.game.load.image('full_heart', '../assets/images/full_heart.png');
-        this.game.load.image('green_pixel', '../assets/images/green_pixel.png');
-
+        this.game.load.image('snake', './assets/images/snake.png');
+        this.game.load.image('apple', './assets/images/apple.png');
+        this.game.load.image('empty_heart', './assets/images/emptyheart.png');
+        this.game.load.image('full_heart', './assets/images/fullheart.png');
+        this.game.load.image('green_pixel', './assets/images/green_pixel.png');
     },
 
     create : function() {
 
         // By setting up global variables in the create function, we initialise them on game start.
         // We need them to be globally available so that the update function can alter them.
-
+ 
         snake = [];                     // This will work as a stack, containing the parts of our snake
         apples = [];                    // List of all apples
         squareSize = 15;                // The length of a side of the squares. Our image is 15x15 pixels.
         score = 0;                      // Game score.
         speed = 0;                      // Game speed.
-        total_time = 30;                // Total number of seconds in the game
+        total_time = 30000;                // Total number of seconds in the game
         time_left = total_time;         // Number of seconds left in the game, updates continuously
         begin_time = (new Date()).getTime();    // time at the start of the game
         update_diff = 5;                // # of interations before update. more = slower snake, less = faster snake
@@ -40,7 +39,7 @@ TurboSnake.Game.prototype = {
         early_cash_in_button = false;   // if you can cash in early or not
         snake_length = 10;              // default snake length
         multiplier = 1000;                 // multiplier per snake piece
-
+        var random = 2;
         // Set up a Phaser controller for keyboard input.
         cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -49,7 +48,6 @@ TurboSnake.Game.prototype = {
         // Look at which powerups are in effect, decrement accordingly
         var keys = Object.keys(powerupInfo);
         for (i = 0; i < keys.length; i++) {
-            console.log(powerupInfo[keys[i]]['count']);
             if (powerupInfo[keys[i]]['count'] > 0) {
                 powerupInfo[keys[i]]['count']--;
                 switch (keys[i]) {
@@ -64,6 +62,12 @@ TurboSnake.Game.prototype = {
                         break;
                     case 'Early_Cash_In':
                         early_cash_in_button = true;   // early cash in button
+                        var helptext = "PRESS SPACE TO CUT TAIL & CASH IN";
+                        var space_text = this.game.add.text(300, 200, helptext, { font: "bold 15px sans-serif", fill: "#ffffff", align: "center"});
+                        space_text.anchor.x = 0.5;
+                        this.game.time.events.add(750, function() {      
+                            this.game.add.tween(space_text).to({alpha: 0}, 750, Phaser.Easing.Linear.None, true);
+                        }, this);
                         break;
                     case 'Longer':
                         snake_length += 5;          // extra length
@@ -82,6 +86,8 @@ TurboSnake.Game.prototype = {
             }
         }
 
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         // Generate the initial snake stack. 
         for(var i = 0; i < snake_length; i++){
@@ -110,8 +116,9 @@ TurboSnake.Game.prototype = {
         timeTextValue = this.game.add.text(540, 8, time_left.toString(), textStyle_Value);
 
         // Life.
-        var heart = this.game.add.sprite(0, 0, 'empty_heart');
+        heart = this.game.add.sprite(0, 0, 'empty_heart');
         if (lives == 1) {
+            heart.destroy();
             heart = this.game.add.sprite(0, 0, 'full_heart');
         }
         heart.width = 15;
@@ -121,10 +128,15 @@ TurboSnake.Game.prototype = {
 
         // Line dividing board & stats:
         var line = this.game.add.sprite(0, 45, 'green_pixel');
-        line.scale.setTo(600, 0.03);
+        line.scale.setTo(600, 2);
     },
 
     update: function() {
+
+        // Cash in on space bar
+        if(this.cursors.space.isDown){
+            this.cashIn();
+        }
 
         // Handle arrow key presses, while not allowing illegal direction changes that will kill the player.
         if (!pause){
@@ -238,6 +250,7 @@ TurboSnake.Game.prototype = {
         }
 
 
+
     },
 
     generateApple: function(){
@@ -250,26 +263,32 @@ TurboSnake.Game.prototype = {
             randomY = Math.floor(Math.random() * 27 + 3) * squareSize;
 
         // Add a new apple.
-        var apple = this.game.add.sprite(randomX, randomY, 'apple');
-        apples.push(apple);
+        var new_apple = this.game.add.sprite(randomX, randomY, 'apple');
+
+        // Add to apples list
+        apples.push(new_apple);
+
     },
 
     appleCollision: function() {
-
+        var delete_apple = false;
         // Check if any part of the snake is overlapping the apple.
         // This is needed if the apple spawns inside of the snake.
         for(var i = 0; i < snake.length; i++){
             var destroyed_apple = 0;
             for (var j = 0; j < apples.length; j++) {
-                var apple = apples[j];
-                if(snake[i].x == apple.x && snake[i].y == apple.y){
+                var curr_apple = apples[j];
+                if(snake[i].x == curr_apple.x && snake[i].y == curr_apple.y){
                     destroyed_apple = j;
 
                     // Next time the snake moves, a new block will be added to its length.
                     addNew = true;
 
+                    // Flag deletion of apple from apples
+                    delete_apple = true;
+
                     // Destroy the old apple.
-                    apple.destroy();
+                    curr_apple.destroy();
 
                     // Make a new one.
                     this.generateApple();
@@ -282,7 +301,8 @@ TurboSnake.Game.prototype = {
 
                 }
             }
-            if (addNew) {
+            if (delete_apple) {
+                delete_apple = false;
                 apples.splice(destroyed_apple, 1);
             }
         }
@@ -297,7 +317,6 @@ TurboSnake.Game.prototype = {
                 if (lives > 0) {
                     lives --;
                     pause = true;
-                    console.log('you crashed yo self');
                     this.deathAnimation();
                 } else {
                     // If so, go to game over screen.
@@ -355,6 +374,13 @@ TurboSnake.Game.prototype = {
     deathAnimation: function() {
         var timeoutID;
 
+        heart.destroy();
+        heart = this.game.add.sprite(0, 0, 'empty_heart');
+        heart.width = 15;
+        heart.height = 15;
+        heart.x = 540;
+        heart.y = 25;
+
         // flash 3 times
         for (var i = 1; i <= 3; i++) {
             timeoutID = window.setTimeout(function() {
@@ -371,6 +397,38 @@ TurboSnake.Game.prototype = {
         }
     },
 
+    cashIn: function() {
+        if (early_cash_in_button) {
+            early_cash_in_button = false;
+            var leftover = snake.slice(0, snake.length-10);
+            var timeoutID;
+            var flashes = 3;
+            // flash 3 times
+            for (var i = 1; i <= flashes; i++) {
+                timeoutID = window.setTimeout(function() {
+                    for(var j = 0; j < leftover.length; j++) {
+                        leftover[j].visible = false;
+                    }
+                }, 100*2*i);
+                
+                timeoutID = window.setTimeout(function() {
+                    for(var j = 0; j < leftover.length; j++) {
+                    leftover[j].visible = true;
+                }
+                }, 100*(2*i+1));
+            }
+            timeoutID = window.setTimeout(function() {
+                for (var i = 0; i < leftover.length; i++) {
+                    leftover[i].destroy();
+                }
+            }, 100*(flashes+1));
+
+            // cut off the first x elements, where x = length - 10 
+            // so that snake is 10 units again, just as the beginning
+            snake = snake.slice(snake.length-10, snake.length);
+        }
+
+    }
 
 
 };

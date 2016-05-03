@@ -7,7 +7,7 @@ TurboSnake.Menu.prototype = {
 
     preload : function() {
         // Load all the needed resources for the menu.
-        this.game.load.image('menu', '../assets/images/menu.png');
+        this.game.load.image('menu', './assets/images/menu.png');
     },
 
     create: function () {
