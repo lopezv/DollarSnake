@@ -27,7 +27,7 @@ TurboSnake.Game.prototype = {
         squareSize = 15;                // The length of a side of the squares. Our image is 15x15 pixels.
         score = 0;                      // Game score.
         speed = 0;                      // Game speed.
-        total_time = 30000;                // Total number of seconds in the game
+        total_time = 30;                // Total number of seconds in the game
         time_left = total_time;         // Number of seconds left in the game, updates continuously
         begin_time = (new Date()).getTime();    // time at the start of the game
         update_diff = 5;                // # of interations before update. more = slower snake, less = faster snake
@@ -140,19 +140,19 @@ TurboSnake.Game.prototype = {
 
         // Handle arrow key presses, while not allowing illegal direction changes that will kill the player.
         if (!pause){
-            if (cursors.right.isDown && direction!='left' && direction!='right')
+            if (cursors.right.isDown && direction!='left')
             {
                 new_direction = 'right';
             }
-            else if (cursors.left.isDown && direction!='right' && direction!='left')
+            else if (cursors.left.isDown && direction!='right')
             {
                 new_direction = 'left';
             }
-            else if (cursors.up.isDown && direction!='down' && direction!='up')
+            else if (cursors.up.isDown && direction!='down')
             {
                 new_direction = 'up';
             }
-            else if (cursors.down.isDown && direction!='up' && direction!='down')
+            else if (cursors.down.isDown && direction!='up')
             {
                 new_direction = 'down';
             }
