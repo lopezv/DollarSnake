@@ -27,7 +27,6 @@ TurboSnake.Home.prototype = {
             this.walls = this.map.createLayer('Tile Layer 2');
             this.computer = this.map.createLayer('Tile Layer 3');
 
-
             this.map.setCollisionByExclusion([0],true,this.walls);
             this.map.setCollisionByExclusion([0],true,this.computer);
 

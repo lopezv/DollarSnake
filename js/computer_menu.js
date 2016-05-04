@@ -6,7 +6,7 @@ TurboSnake.Computer_Menu.prototype = {
     create: function() {
         this.game.stage.backgroundColor = '#707070';
 
-        this.game.add.text(10,10, '< Press space to go back.', {font:'14px Arial', fill: '#fff'});
+        this.game.add.text(10,10, '<- Press space to go back.', {font:'14px Arial', fill: '#fff'});
 
         this.game.add.text(20,50, 'View Finances\n', {font:'14px Arial', fill: '#fff'});
         this.game.add.text(20, 90, 'Buy Upgrades', {font: '14px Arial', fill: '#fff'}); 
