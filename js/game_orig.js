@@ -14,7 +14,7 @@ TurboSnake.Game.prototype = {
         this.game.load.image('apple', './assets/images/apple.png');
         this.game.load.image('empty_heart', './assets/images/emptyheart.png');
         this.game.load.image('full_heart', './assets/images/fullheart.png');
-        this.game.load.image('green_pixel', './assets/images/green_pixel.png');
+        this.game.load.image('green_pixel', './assets/images/greenpixel.png');
     },
 
     create : function() {
@@ -51,8 +51,9 @@ TurboSnake.Game.prototype = {
             if (powerupInfo[keys[i]]['count'] > 0) {
                 powerupInfo[keys[i]]['count']--;
                 switch (keys[i]) {
-                    case 'Slow_Time':
+                    case 'Slower_Better':
                         update_diff += 3;            // slows snake, updates slower
+                        multiplier = 1500;           // each snake pixel worth more
                         break;
                     case 'Double_Pellets':
                         this.generateApple();       // makes an extra apple
@@ -62,6 +63,7 @@ TurboSnake.Game.prototype = {
                         break;
                     case 'Early_Cash_In':
                         early_cash_in_button = true;   // early cash in button
+                        score = 5;
                         var helptext = "PRESS SPACE TO CUT TAIL & CASH IN";
                         var space_text = this.game.add.text(300, 200, helptext, { font: "bold 15px sans-serif", fill: "#ffffff", align: "center"});
                         space_text.anchor.x = 0.5;
@@ -72,8 +74,7 @@ TurboSnake.Game.prototype = {
                     case 'Longer':
                         snake_length += 5;          // extra length
                         break;
-                    case 'Quicker_Better':
-                        multiplier = 1500;           // each snake pixel worth more
+                    case 'Quicker':
                         update_diff -= 3;            // updates faster, speeds up snake
                         break;
                     case 'Double_Time':
@@ -127,8 +128,8 @@ TurboSnake.Game.prototype = {
         heart.y = 25;
 
         // Line dividing board & stats:
-        var line = this.game.add.sprite(0, 45, 'green_pixel');
-        line.scale.setTo(600, 2);
+        var line = this.game.add.sprite(0, 43, 'green_pixel');
+        line.scale.setTo(600, 1);
     },
 
     update: function() {

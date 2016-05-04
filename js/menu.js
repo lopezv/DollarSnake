@@ -11,6 +11,9 @@ TurboSnake.Menu.prototype = {
     },
 
     create: function () {
+        // add spacebar
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         // Add menu screen.
         // It will act as a button to start the game.
@@ -39,6 +42,18 @@ TurboSnake.Menu.prototype = {
         var powerup_text = this.game.add.text(300, 410, powerup, { font: "bold 15px sans-serif", fill: "#ffffff", align: "center"});
         powerup_text.anchor.x = 0.5;
 
+        // space to start
+        var instruction = "PRESS SPACE TO START";
+        var helptext = this.game.add.text(300, 310, instruction, { font: "bold 17px sans-serif", fill: "#46c0f9", align: "center"});
+        helptext.anchor.x = 0.5;
+
+    },
+
+    update: function() {
+        // Start on space down
+        if(this.cursors.space.isDown){
+            this.startGame();
+        }
     },
 
     startGame: function () {
