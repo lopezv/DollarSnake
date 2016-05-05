@@ -26,8 +26,8 @@ TurboSnake.Finance_Menu.prototype = {
             this.game.state.start('Computer_Menu');
         }
 
-        this.creditText.text = this.creditString +'$ '+(credit).formatMoney(2);
-        this.debtText.text = this.debtString + '$ '+ (debt).formatMoney(2);
+        this.creditText.text = this.creditString +(credit).formatMoney(2);
+        this.debtText.text = this.debtString + (debt).formatMoney(2);
     },
     pay_debt: function() {
         var init_credit = credit;
