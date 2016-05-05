@@ -33,6 +33,7 @@ TurboSnake.Game_Over.prototype = {
             default:
                 break;
         }
+
         var reason = this.game.add.text(300, 310, reason_text, { font: "bold 15px sans-serif", fill: "#ffffff", align: "center"});
         reason.anchor.x = 0.5;
 
@@ -41,6 +42,16 @@ TurboSnake.Game_Over.prototype = {
         this.game.add.text(210, 350, "YOU EARNED", { font: "bold 15px sans-serif", fill: "#46c0f9", align: "center"});
         this.game.add.text(340, 350, '$ ' + earned_money, { font: "bold 15px sans-serif", fill: "#fff", align: "center" });
 
+        // add spacebar
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    },
+    
+    update: function() {
+        // Start on space down
+        if(this.cursors.space.isDown){
+            this.startGame();
+        }
     },
 
     startGame: function () {
@@ -55,7 +66,7 @@ TurboSnake.Game_Over.prototype = {
 
         // Change the state to the actual game.
         this.state.start('Home');
-
+        day++;
     }
 
 };

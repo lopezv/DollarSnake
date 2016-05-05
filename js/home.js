@@ -10,6 +10,10 @@ TurboSnake.Home = function() {
         this.safetile = 1;
         this.gridsize = 16;
         this.blocksize = 30;
+        this.key_style = { font: "bold 15px sans-serif", fill: "#46c0f9", align: "center" };
+        this.object_style = { font: "bold 15px sans-serif", fill: "#fff", align: "center" };
+        this.red = { font: "bold 15px sans-serif", fill: "#B0171F", align: "center" };
+
 };
 
 TurboSnake.Home.prototype = {
@@ -18,7 +22,7 @@ TurboSnake.Home.prototype = {
         	this.physics.startSystem(Phaser.Physics.ARCADE);
     },
     create: function() {
-
+	        this.game.stage.backgroundColor = '#061f27';
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('TilesSet', 'tiles');
             this.map.addTilesetImage('computer', 'computer')
@@ -27,11 +31,10 @@ TurboSnake.Home.prototype = {
             this.walls = this.map.createLayer('Tile Layer 2');
             this.computer = this.map.createLayer('Tile Layer 3');
 
-
             this.map.setCollisionByExclusion([0],true,this.walls);
             this.map.setCollisionByExclusion([0],true,this.computer);
 
-	        this.add.text(10,40, 'Your net worth : ' + (credit - debt), {font:'14px Arial', fill: '#fff'});
+            this.createHeader();
 
             this.snake = this.add.sprite(startX, startY, 'snake_home');
             this.snake.anchor.set(0.5);
@@ -106,6 +109,19 @@ TurboSnake.Home.prototype = {
 	        	this.state.start('Menu');
             }
 	},
+	createHeader: function(){
+	        var worth = this.add.text(410,20, 'Your net worth : ', this.key_style);
+	        this.add.text(420 + worth.width,20, (credit - debt), this.object_style);
+
+	        var day_text = this.add.text(410,50, 'Day : ', this.key_style);
+	        this.add.text(420 + day_text.width,50, day +'', this.object_style);
+
+	        var credit_text = this.add.text(10,20, 'Credit : ', this.key_style);
+	        this.add.text(20 + credit_text.width,20, credit, this.object_style);
+
+	        var debt_text = this.add.text(10,50, 'Debt : ', this.key_style);
+	        this.add.text(20 + debt_text.width,50, '- ' + debt, this.red);
+	}
 
 };
 

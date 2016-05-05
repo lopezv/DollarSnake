@@ -4,16 +4,17 @@ TurboSnake.game = new Phaser.Game(600, 450, Phaser.AUTO, '');
 
 var credit = 5000,
 	debt = 50000,
+	day = 0,
 	startX = 300, startY = 400,
 	avaliablePowerups = [],
 	powerupInfo = {
 		// TODO: implement EARLY CASH IN
-		'Slow_Time' : {'cost': 1000, 'count' : 0, 'name': 'SLOW TIME'},
+		'Slower_Better' : {'cost': 1000, 'count' : 0, 'name': 'MOVE SLOWER & MORE MONEY'},
 		'Double_Pellets' : {'cost': 2000, 'count' : 0, 'name' : 'DOUBLE PELLETS'},
 		'Life+1' : {'cost': 3000, 'count' : 0, 'name' : ' LIFE + 1'},
-		'Early_Cash_In' : {'cost': 4000, 'count' : 1, 'name' : 'EARLY CASH IN'},
-		'Longer' : {'cost': 3000, 'count' : 1, 'name' : 'BEGIN LONGER'},
-		'Quicker_Better'  : {'cost': 4000, 'count' : 0, 'name' : 'MOVE QUICKER GAIN MORE'},
+		'Early_Cash_In' : {'cost': 4000, 'count' : 0, 'name' : 'EARLY CASH IN'},
+		'Longer' : {'cost': 3000, 'count' : 0, 'name' : 'BEGIN LONGER'},
+		'Quicker'  : {'cost': 4000, 'count' : 0, 'name' : 'MOVE QUICKER'},
 		'Double_Time' : {'cost': 4000, 'count' : 0, 'name' :'DOUBLE PLAY TIME'}
 	},
 	powerupsArr = Object.keys(powerupInfo),
