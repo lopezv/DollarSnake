@@ -12,6 +12,7 @@ TurboSnake.Home = function() {
         this.blocksize = 30;
         this.key_style = { font: "bold 15px sans-serif", fill: "#46c0f9", align: "center" };
         this.object_style = { font: "bold 15px sans-serif", fill: "#fff", align: "center" };
+        this.red = { font: "bold 15px sans-serif", fill: "#B0171F", align: "center" };
 
 };
 
@@ -119,7 +120,7 @@ TurboSnake.Home.prototype = {
 	        this.add.text(20 + credit_text.width,20, credit, this.object_style);
 
 	        var debt_text = this.add.text(10,50, 'Debt : ', this.key_style);
-	        this.add.text(20 + debt_text.width,50, debt, this.object_style);
+	        this.add.text(20 + debt_text.width,50, '- ' + debt, this.red);
 	}
 
 };

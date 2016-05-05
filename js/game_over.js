@@ -66,7 +66,7 @@ TurboSnake.Game_Over.prototype = {
 
         // Change the state to the actual game.
         this.state.start('Home');
-
+        day++;
     }
 
 };
