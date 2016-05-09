@@ -24,16 +24,6 @@ TurboSnake.Buy_Menu.prototype = {
 
         this.game.add.text(10,10, '<- Press space to go back.', this.default_style);   
 
-        //define the region
-        var top_left_corner = new Phaser.Rectangle(0,0,250,50)
-        //listen for pointers
-        this.game.input.onDown.add(function(pointer){    
-            //this is the test, contains test for a point belonging to a rect definition    
-            var inside = top_left_corner.contains(pointer.x,pointer.y);
-            //go to main menu   
-            this.game.state.start('Computer_Menu');
-        });     
-
         this.buttons = this.game.add.group();
 
         avaliablePowerups.forEach(function(power, ind){
