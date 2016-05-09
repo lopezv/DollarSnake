@@ -13,7 +13,22 @@ TurboSnake.Finance_Menu.prototype = {
         background.height = 450;
 
 
-        this.game.add.text(10,10, '<- Press space to go back.', {font:'14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'});        
+        this.game.add.text(10,10, '<- Press space to go back.', {font:'14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'});     
+
+        //define the region
+        var top_left_corner = new Phaser.Rectangle(0,0,250,50)
+        var game = this.game;
+        //listen for pointers
+        this.game.input.onDown.add(function(pointer, game){    
+            //this is the test, contains test for a point belonging to a rect definition    
+            var inside = topLeftQuarter.contains(pointer.x,pointer.y);
+            //go to main menu   
+            console.log(game);
+            if (inside) {
+                game.state.start('Computer_Menu');
+            }
+        });
+
         this.creditText = this.game.add.text(20,50, this.creditString + (credit).formatMoney(2), {font:'14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'});
         this.debtText = this.game.add.text(20, 90, this.debtString +  (debt).formatMoney(2), {font: '14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'}); 
 

@@ -116,6 +116,9 @@ TurboSnake.Home.prototype = {
 	        var day_text = this.add.text(410,50, 'Day : ', this.key_style);
 	        this.add.text(420 + day_text.width,50, day +'', this.object_style);
 
+	        var level_text = this.add.text(510,50, 'Level : ', this.key_style);
+	        this.add.text(520 + level_text.width,50, level +'', this.object_style);
+
 	        var credit_text = this.add.text(10,20, 'Credit : ', this.key_style);
 	        this.add.text(20 + credit_text.width,20, credit + '', this.object_style);
 

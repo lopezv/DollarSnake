@@ -4,7 +4,8 @@ TurboSnake.game = new Phaser.Game(600, 450, Phaser.CANVAS, '');
 
 var credit = 5000,
 	debt = 50000,
-	day = 0,
+	day = 1,
+	level = 1,
 	startX = 300, startY = 400,
 	avaliablePowerups = [],
 	powerupInfo = {

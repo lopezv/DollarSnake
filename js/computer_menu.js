@@ -10,9 +10,10 @@ TurboSnake.Computer_Menu.prototype = {
         background.height = 450;
 
         this.game.add.text(10,10, '<- Press space to go back.', {font:'14px Arial', fill: '#fff',stroke:'#000000', strokeThickness: '2'});
+        
 
-        this.game.add.text(20,50, 'View Finances\n', {font:'14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'});
-        this.game.add.text(20, 90, 'Buy Upgrades', {font: '14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'}); 
+        //this.game.add.text(20,50, 'View Finances\n', {font:'14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'});
+        //this.game.add.text(20, 90, 'Buy Upgrades', {font: '14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'}); 
 
         var button_finance = this.game.add.button(100, 200, 'finance_button', this.finance, this, 0, 1, 2);
         button_finance.scale.x = .5;
