@@ -1,10 +1,11 @@
 var TurboSnake = TurboSnake || {};
 
 TurboSnake.Buy_Menu = function() {
-    this.intro_string = 'You can purchase powerups here!\n\nAvaliable Today:              Funds : ';
+    this.intro_string = 'You can purchase powerups here!';
+    this.fund_string = 'Avaliable Today:              Funds : ';
     this.intro = null;
     this.buttons = null;
-    this.default_style = {font:'14px Arial', fill: '#FFFFFF', stroke:'#000000', strokeThickness: '2'};
+    this.default_style = {font:'bold 14px Arial', fill: '#FFFFFF', stroke:'black', strokeThickness: '1'};
     this.title_style = {font:'bold 14px Arial', fill: '#000000', stroke:'white', strokeThickness: '1'};
 
     var self = this;
@@ -22,15 +23,13 @@ TurboSnake.Buy_Menu.prototype = {
         background.height = 450;
 
         this.game.add.text(10,10, '<- Press space to go back.', this.default_style);        
-        this.intro = this.game.add.text(20,50, this.intro_string + credit , this.default_style);
-
 
         this.buttons = this.game.add.group();
 
         avaliablePowerups.forEach(function(power, ind){
             self.game.add.text(20, 100 + 115*ind, powerupInfo[power].name + ' ($'+ powerupInfo[power].cost + ')',self.default_style);
-	        var button = self.game.add.button(25, 125 + 115*ind, 'buy_button', self.buy(power), self, 0, 1, 2);
-            button.scale.setTo(.5,.4);
+	        var button = self.game.add.button(25, 120 + 115*ind, 'buy_button', self.buy(power), self, 0, 1, 2);
+            button.scale.setTo(.5, .4);
             self.buttons.add(button);
         });
 
@@ -39,6 +38,8 @@ TurboSnake.Buy_Menu.prototype = {
             self.game.add.text(360, 50 + 50*ind, powerupInfo[power].name, self.default_style);
             self[power + 'text'] = self.game.add.text(400, 75 + 50*ind, 'Avaliable : ' + powerupInfo[power].count , self.default_style);
         });
+        this.intro = this.game.add.text(20,40, this.intro_string, this.default_style);
+        this.funds = this.game.add.text(20,70, this.fund_string + credit , this.default_style);
         
         this.cursors = {};
         this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -48,9 +49,9 @@ TurboSnake.Buy_Menu.prototype = {
         if(this.cursors.space.isDown) {
             this.game.state.start('Computer_Menu');
         }
-        this.updateInv(false);
+        this.updateInv();
 
-        this.intro.text = this.intro_string + credit;
+        this.funds.text = this.fund_string + credit;
     },
     render: function(){
        // this.debug.text("Time until event: " + this.time.events.duration, 32, 32);
