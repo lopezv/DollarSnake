@@ -51,27 +51,28 @@ TurboSnake.Home.prototype = {
 
     },
     move: function(){
+    	var speed = 150 * (.1*day + 1);
 	    this.snake.body.velocity.x = 0;
 	    this.snake.body.velocity.y = 0;
 
 	    if (this.cursors.left.isDown)
 	    {
-	        this.snake.body.velocity.x = -150;
+	        this.snake.body.velocity.x -= speed;
 	        this.snake.animations.play('left');
 	    }
 	    else if (this.cursors.right.isDown)
 	    {
-	        this.snake.body.velocity.x = 150;
+	        this.snake.body.velocity.x = speed;
 	        this.snake.animations.play('right');
 	    }
 	    else if (this.cursors.up.isDown)
 	    {
-	        this.snake.body.velocity.y = -150;
+	        this.snake.body.velocity.y -= speed;
 	        this.snake.animations.play('up');
 	    }
 	    else if (this.cursors.down.isDown)
 	    {
-	        this.snake.body.velocity.y = 150;
+	        this.snake.body.velocity.y = speed;
 	        this.snake.animations.play('down');
 	    }
 	    else
@@ -111,7 +112,7 @@ TurboSnake.Home.prototype = {
 	},
 	createHeader: function(){
 	        var worth = this.add.text(410,20, 'Your net worth : ', this.key_style);
-	        this.add.text(420 + worth.width,20, (credit - debt) + '', this.object_style);
+	        this.add.text(420 + worth.width,20, (credit - debt).formatMoney(2) , this.object_style);
 
 	        var day_text = this.add.text(410,50, 'Day : ', this.key_style);
 	        this.add.text(420 + day_text.width,50, day +'', this.object_style);
@@ -120,10 +121,10 @@ TurboSnake.Home.prototype = {
 	        this.add.text(520 + level_text.width,50, level +'', this.object_style);
 
 	        var credit_text = this.add.text(10,20, 'Credit : ', this.key_style);
-	        this.add.text(20 + credit_text.width,20, credit + '', this.object_style);
+	        this.add.text(20 + credit_text.width,20, credit.formatMoney(2), this.object_style);
 
 	        var debt_text = this.add.text(10,50, 'Debt : ', this.key_style);
-	        this.add.text(20 + debt_text.width,50, '- ' + debt, this.red);
+	        this.add.text(20 + debt_text.width,50, '- ' + debt.formatMoney(2), this.red);
 	}
 
 };
