@@ -51,27 +51,28 @@ TurboSnake.Home.prototype = {
 
     },
     move: function(){
+    	var speed = 150 * (.1*day + 1);
 	    this.snake.body.velocity.x = 0;
 	    this.snake.body.velocity.y = 0;
 
 	    if (this.cursors.left.isDown)
 	    {
-	        this.snake.body.velocity.x = -150;
+	        this.snake.body.velocity.x -= speed;
 	        this.snake.animations.play('left');
 	    }
 	    else if (this.cursors.right.isDown)
 	    {
-	        this.snake.body.velocity.x = 150;
+	        this.snake.body.velocity.x = speed;
 	        this.snake.animations.play('right');
 	    }
 	    else if (this.cursors.up.isDown)
 	    {
-	        this.snake.body.velocity.y = -150;
+	        this.snake.body.velocity.y -= speed;
 	        this.snake.animations.play('up');
 	    }
 	    else if (this.cursors.down.isDown)
 	    {
-	        this.snake.body.velocity.y = 150;
+	        this.snake.body.velocity.y = speed;
 	        this.snake.animations.play('down');
 	    }
 	    else

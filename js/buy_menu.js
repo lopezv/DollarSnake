@@ -5,8 +5,11 @@ TurboSnake.Buy_Menu = function() {
     this.fund_string = 'Avaliable Today:              Funds : ';
     this.intro = null;
     this.buttons = null;
-    this.default_style = {font:'bold 14px Arial', fill: '#FFFFFF', stroke:'black', strokeThickness: '1'};
-    this.title_style = {font:'bold 14px Arial', fill: '#000000', stroke:'white', strokeThickness: '1'};
+
+    this.title_style = { font: "bold 15px sans-serif", fill: "#46c0f9", align: "center" };
+    this.default_style = { font: "bold 15px sans-serif", fill: "#fff", align: "center" };
+    this.red = { font: "bold 15px sans-serif", fill: "#B0171F", align: "center" };
+
 
     var self = this;
     powerupsArr.forEach(function(power, ind){
@@ -16,11 +19,8 @@ TurboSnake.Buy_Menu = function() {
 
 TurboSnake.Buy_Menu.prototype = {
     create: function() {
-        var self = this,
-            background = this.game.add.sprite(0, 0, 'bliss');
-
-        background.width = 600;
-        background.height = 450;
+        var self = this;
+        this.game.stage.backgroundColor = '#061f27';
 
         this.game.add.text(10,10, '<- Press space to go back.', this.default_style);        
 
@@ -28,14 +28,14 @@ TurboSnake.Buy_Menu.prototype = {
 
         avaliablePowerups.forEach(function(power, ind){
             self.game.add.text(20, 100 + 115*ind, powerupInfo[power].name + ' ($'+ powerupInfo[power].cost + ')',self.default_style);
-	        var button = self.game.add.button(25, 120 + 115*ind, 'buy_button', self.buy(power), self, 0, 1, 2);
+	        var button = self.game.add.button(25, 120 + 115*ind, 'buy_button', self.buy(power), self, 1, 0, 2);
             button.scale.setTo(.5, .4);
             self.buttons.add(button);
         });
 
         this.game.add.text(360, 20, "Inventory:", this.title_style);
         powerupsArr.forEach(function(power, ind){
-            self.game.add.text(360, 50 + 50*ind, powerupInfo[power].name, self.default_style);
+            self.game.add.text(360, 50 + 50*ind, powerupInfo[power].name, self.title_style);
             self[power + 'text'] = self.game.add.text(400, 75 + 50*ind, 'Avaliable : ' + powerupInfo[power].count , self.default_style);
         });
         this.intro = this.game.add.text(20,40, this.intro_string, this.default_style);
@@ -52,10 +52,6 @@ TurboSnake.Buy_Menu.prototype = {
         this.updateInv();
 
         this.funds.text = this.fund_string + credit;
-    },
-    render: function(){
-       // this.debug.text("Time until event: " + this.time.events.duration, 32, 32);
-
     },
     updateInv: function(){
         var self = this;
@@ -88,7 +84,8 @@ TurboSnake.Buy_Menu.prototype = {
             this.disable();
             this.game.time.events.add(250, this.enable, this);
 
-            powerupInfo[powerup].count += 1
+            powerupInfo[powerup].cost *= 1.1;
+            powerupInfo[powerup].count += 1;
     	}
     }
 };
