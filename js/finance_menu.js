@@ -7,15 +7,18 @@ TurboSnake.Finance_Menu = function() {
 
 TurboSnake.Finance_Menu.prototype = {
     create: function() {
-        this.game.stage.backgroundColor = '#707070';
+        var background = this.game.add.sprite(0, 0, 'bliss');
 
-        this.game.add.text(10,10, '< Press space to go back.', {font:'14px Arial', fill: '#fff'});        
-        this.creditText = this.game.add.text(20,50, this.creditString + (credit).formatMoney(2), {font:'14px Arial', fill: '#fff'});
-        this.debtText = this.game.add.text(20, 90, this.debtString +  (debt).formatMoney(2), {font: '14px Arial', fill: '#fff'}); 
+        background.width = 600;
+        background.height = 450;
 
-        var button_pay = this.game.add.button(100, 200, 'pay_debt_button', this.pay_debt, this);
-        button_pay.scale.x = .5;
-        button_pay.scale.y = .5;
+
+        this.game.add.text(10,10, '<- Press space to go back.', {font:'14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'});        
+        this.creditText = this.game.add.text(20,50, this.creditString + (credit).formatMoney(2), {font:'14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'});
+        this.debtText = this.game.add.text(20, 90, this.debtString +  (debt).formatMoney(2), {font: '14px Arial', fill: '#fff', stroke:'#000000', strokeThickness: '2'}); 
+
+        var button_pay = this.game.add.button(100, 200, 'pay_debt_button', this.pay_debt, this, 0, 1, 2);
+        button_pay.scale.setTo(.5);
         
         this.cursors = {};
         this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -32,6 +35,6 @@ TurboSnake.Finance_Menu.prototype = {
     pay_debt: function() {
         var init_credit = credit;
         credit = Math.max(0, credit - debt);
-        debt = Math.max(0, debt-init_credit);
+        debt = Math.max(0, debt-init_credit);        
     }
 };

@@ -1,31 +1,44 @@
 var TurboSnake = TurboSnake || {};
 
 TurboSnake.Buy_Menu = function() {
-    this.intro_string = 'You can purchase powerups here!\nAvaliable Today:              Funds : ';
+    this.intro_string = 'You can purchase powerups here!\n\nAvaliable Today:              Funds : ';
     this.intro = null;
+    this.buttons = null;
+    this.default_style = {font:'14px Arial', fill: '#FFFFFF', stroke:'#000000', strokeThickness: '2'};
+    this.title_style = {font:'bold 14px Arial', fill: '#000000', stroke:'white', strokeThickness: '1'};
+
+    var self = this;
+    powerupsArr.forEach(function(power, ind){
+        self[power + 'text'] = null;
+    });
 };
 
 TurboSnake.Buy_Menu.prototype = {
     create: function() {
-        var self = this;
-        this.game.stage.backgroundColor = '#707070';
-        this.game.add.text(10,10, '< Press space to go back.', {font:'14px Arial', fill: '#fff'});        
-        this.intro = this.game.add.text(20,50, this.intro_string + credit , {font:'14px Arial', fill: '#fff'});
+        var self = this,
+            background = this.game.add.sprite(0, 0, 'bliss');
+
+        background.width = 600;
+        background.height = 450;
+
+        this.game.add.text(10,10, '<- Press space to go back.', this.default_style);        
+        this.intro = this.game.add.text(20,50, this.intro_string + credit , this.default_style);
 
 
-        var buttons = this.game.add.group();
+        this.buttons = this.game.add.group();
 
         avaliablePowerups.forEach(function(power, ind){
-            self.game.add.text(20, 100 + 75*ind, powerupInfo[power].name + ' ($'+ powerupInfo[power].cost + ')', {font:'14px Arial', fill: '#fff'});
-	        var button = self.game.add.button(25, 125 + 75*ind, 'buy_with_cash', self.buy(power), self),
-	        button_debt = self.game.add.button(200, 125 + 75*ind, 'buy_with_debt', self.debt(power), self);
-            button.scale.setTo(.5,.25);
-            button_debt.scale.setTo(.5,.25);
-            buttons.add(button_debt);
-            buttons.add(button);
+            self.game.add.text(20, 100 + 115*ind, powerupInfo[power].name + ' ($'+ powerupInfo[power].cost + ')',self.default_style);
+	        var button = self.game.add.button(25, 125 + 115*ind, 'buy_button', self.buy(power), self, 0, 1, 2);
+            button.scale.setTo(.5,.4);
+            self.buttons.add(button);
         });
 
-        //buttons.scale.setTo(.5,.25);
+        this.game.add.text(360, 20, "Inventory:", this.title_style);
+        powerupsArr.forEach(function(power, ind){
+            self.game.add.text(360, 50 + 50*ind, powerupInfo[power].name, self.default_style);
+            self[power + 'text'] = self.game.add.text(400, 75 + 50*ind, 'Avaliable : ' + powerupInfo[power].count , self.default_style);
+        });
         
         this.cursors = {};
         this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -35,23 +48,46 @@ TurboSnake.Buy_Menu.prototype = {
         if(this.cursors.space.isDown) {
             this.game.state.start('Computer_Menu');
         }
+        this.updateInv(false);
 
         this.intro.text = this.intro_string + credit;
+    },
+    render: function(){
+       // this.debug.text("Time until event: " + this.time.events.duration, 32, 32);
+
+    },
+    updateInv: function(){
+        var self = this;
+        powerupsArr.forEach(function(power, ind){
+            self[power + 'text'].text = 'Avaliable : ' + powerupInfo[power].count;
+        });
+    },
+    disable: function(){
+        var self = this;
+        this.buttons.forEach(function(button){
+            button.input.enabled = false;
+        });
+    },
+    enable: function(){
+        var self = this;
+        this.buttons.forEach(function(button){
+            button.input.enabled = true;
+        });
     },
     buy: function(powerup) {
     	return function(){
     		cost = powerupInfo[powerup].cost;
     		if(credit >= cost){
     			credit -= cost;
-    			powerupInfo[powerup].count += 1
-    		}
-    	}
-    },
-    debt: function(powerup) {
-    	return function(){
-   			debt += powerupInfo[powerup].cost;;
-  			powerupInfo[powerup].count += 1
+    		} else {
+                cost -= credit;
+                credit = 0;
+                debt += cost;
+            }
+            this.disable();
+            this.game.time.events.add(250, this.enable, this);
+
+            powerupInfo[powerup].count += 1
     	}
     }
-
 };
