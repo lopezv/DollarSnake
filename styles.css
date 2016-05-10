@@ -1,0 +1,10 @@
+#leaderForm {
+	position: absolute;
+	top: 390px;
+	left: 300px;
+	display: none;
+}
+
+.visible {
+	display: block !important;
+}

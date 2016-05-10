@@ -3,12 +3,14 @@
 <head> 
 	<meta charset="UTF-8" />
     <title>$nake</title>
+	<link rel="stylesheet" href="styles.css">
 	<script type="text/javascript" src="js/lib/phaser.min.js"></script>
 	<script type="text/javascript" src='js/home.js'></script>
 	<script type="text/javascript" src='js/preload.js'></script>
 	<script type="text/javascript" src='js/computer_menu.js'></script>
 	<script type="text/javascript" src='js/finance_menu.js'></script>
 	<script type="text/javascript" src='js/buy_menu.js'></script>
+	<script type="text/javascript" src='js/leaderboard.js'></script>
 	<script src="js/menu.js"></script>
     <script src="js/game_orig.js"></script>
     <script src="js/game_over.js"></script>
@@ -18,5 +20,11 @@
 </head>
 <body>
 	<script type="text/javascript" src='js/main.js'></script>
+	<form  id='leaderForm' action="http://example.com/" method="POST">
+	  <input type="text" name="name" value="">
+	  <input type="hidden" name="day" value="">
+	  <input type="hidden" name="powerup" value="">
+	  <input type="hidden" name="score" value="">
+	</form>
 </body>
 </html>

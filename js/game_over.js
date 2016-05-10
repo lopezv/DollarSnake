@@ -15,6 +15,8 @@ TurboSnake.Game_Over.prototype = {
     create : function() {
         line1 = new Phaser.Line(0,0,0,0);
 
+        show_form();
+
         // Create button to start game similar to the main menu.
         this.add.button(0, 0, 'gameover', this.startGame, this);
 
@@ -41,6 +43,8 @@ TurboSnake.Game_Over.prototype = {
         var earned_money = (score * multiplier).formatMoney(2);
         this.game.add.text(210, 350, "YOU EARNED", { font: "bold 15px sans-serif", fill: "#46c0f9", align: "center"});
         this.game.add.text(340, 350, '$ ' + earned_money, { font: "bold 15px sans-serif", fill: "#fff", align: "center" });
+        this.game.add.text(210, 385, "NAME", { font: "bold 15px sans-serif", fill: "#46c0f9", align: "center"});
+
 
         // add spacebar
         this.cursors = this.input.keyboard.createCursorKeys();

@@ -7,6 +7,7 @@ var credit = 5000,
 	day = 1,
 	level = 1,
 	startX = 300, startY = 400,
+	serverUrl = 'http://127.0.0.1:5000',
 	avaliablePowerups = [],
 	powerupInfo = {
 		// TODO: implement EARLY CASH IN
@@ -28,6 +29,14 @@ var credit = 5000,
 	        shuffled[i] = temp;
 	    }
        	avaliablePowerups = shuffled.slice(min);		    
+	},
+	show_form = function(){
+        var el = document.getElementById('leaderForm');
+        el.classList.add('visible');
+	},
+	hide_form = function(){
+        var el = document.getElementById('leaderForm');
+        el.classList.remove('visible');
 	};
         
 
@@ -35,6 +44,7 @@ TurboSnake.game.state.add('Preload', TurboSnake.Preload);
 TurboSnake.game.state.add('Computer_Menu', TurboSnake.Computer_Menu);
 TurboSnake.game.state.add('Buy_Menu', TurboSnake.Buy_Menu);
 TurboSnake.game.state.add('Finance_Menu', TurboSnake.Finance_Menu);
+TurboSnake.game.state.add('Leader_Menu', TurboSnake.Leader_Menu);
 TurboSnake.game.state.add('Home', TurboSnake.Home);
 TurboSnake.game.state.add('Menu', TurboSnake.Menu);
 TurboSnake.game.state.add('Game', TurboSnake.Game);
@@ -42,4 +52,4 @@ TurboSnake.game.state.add('Game_Over', TurboSnake.Game_Over);
 
 
 getRandomPowerUps();
-TurboSnake.game.state.start('Preload');
+TurboSnake.game.state.start('Leader_Menu');
