@@ -23,7 +23,7 @@ TurboSnake.Buy_Menu.prototype = {
         var self = this;
         this.game.stage.backgroundColor = '#061f27';
 
-        this.game.add.text(10,10, '<- Press space to go back.', this.default_style);        
+        this.game.add.text(10,10, '<- Press space to go back.', this.default_style);   
 
         this.buttons = this.game.add.group();
 

@@ -7,6 +7,7 @@ TurboSnake.Computer_Menu = function() {
 
 TurboSnake.Computer_Menu.prototype = {
     create: function() {
+
         this.game.stage.backgroundColor = '#061f27';
         this.game.add.text(10,10, '<- Press space to go back.', this.style);
 

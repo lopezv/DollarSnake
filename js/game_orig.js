@@ -38,7 +38,7 @@ TurboSnake.Game.prototype = {
         lives = 0;                      // Num lives, can be at most 1.
         early_cash_in_button = false;   // if you can cash in early or not
         snake_length = 10;              // default snake length
-        multiplier = 1000;                 // multiplier per snake piece
+        multiplier = 100*level + 900;  // multiplier per snake piece
         var random = 2;
         // Set up a Phaser controller for keyboard input.
         cursors = this.game.input.keyboard.createCursorKeys();
@@ -53,7 +53,7 @@ TurboSnake.Game.prototype = {
                 switch (keys[i]) {
                     case 'Slower_Better':
                         update_diff += 3;            // slows snake, updates slower
-                        multiplier = 1500;           // each snake pixel worth more
+                        multiplier += 500;           // each snake pixel worth more
                         break;
                     case 'Double_Pellets':
                         this.generateApple();       // makes an extra apple
@@ -87,6 +87,7 @@ TurboSnake.Game.prototype = {
             }
         }
 
+        console.log(multiplier);
         this.cursors = this.input.keyboard.createCursorKeys();
         this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
