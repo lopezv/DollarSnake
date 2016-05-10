@@ -25,7 +25,8 @@ TurboSnake.Home.prototype = {
 	        this.game.stage.backgroundColor = '#061f27';
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('TilesSet', 'tiles');
-            this.map.addTilesetImage('computer', 'computer')
+            this.map.addTilesetImage('computer', 'computer');
+            this.map.addTilesetImage('Sidewalk_dark', 'neo');
 
             this.floor = this.map.createLayer('Tile Layer 1');
             this.walls = this.map.createLayer('Tile Layer 2');
@@ -111,11 +112,11 @@ TurboSnake.Home.prototype = {
             }
 	},
 	createHeader: function(){
-	        var worth = this.add.text(410,20, 'Your net worth : ', this.key_style);
-	        this.add.text(420 + worth.width,20, (credit - debt).formatMoney(2) , this.object_style);
+	        var worth = this.add.text(340,20, 'Your net worth : ', this.key_style);
+	        this.add.text(350 + worth.width,20, (credit - debt).formatMoney(2) , this.object_style);
 
-	        var day_text = this.add.text(410,50, 'Day : ', this.key_style);
-	        this.add.text(420 + day_text.width,50, day +'', this.object_style);
+	        var day_text = this.add.text(340,50, 'Day : ', this.key_style);
+	        this.add.text(350 + day_text.width,50, day +'', this.object_style);
 
 	        var credit_text = this.add.text(10,20, 'Credit : ', this.key_style);
 	        this.add.text(20 + credit_text.width,20, credit.formatMoney(2), this.object_style);

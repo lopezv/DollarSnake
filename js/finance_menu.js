@@ -32,7 +32,7 @@ TurboSnake.Finance_Menu.prototype = {
         }
 
         this.creditText.text = (credit).formatMoney(2);
-        this.debtText.text = (debt).formatMoney(2);
+        this.debtText.text = '- ' + (debt).formatMoney(2);
     },
     pay_debt: function() {
         var init_credit = credit;

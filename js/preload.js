@@ -5,8 +5,9 @@ TurboSnake.Preload = function() {};
 TurboSnake.Preload.prototype = {
     preload: function() {
         this.load.spritesheet('snake_home', 'assets/snake.png', 30, 30);
-        this.load.tilemap('map', 'assets/home.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('map', 'assets/HomeTiles_2.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles', 'assets/TilesSet.png');
+        this.load.image('neo', 'assets/Sidewalk_dark.png');
         this.load.image('computer', 'assets/computer.png');
         this.load.image('background', 'assets/bliss.png');
         this.load.spritesheet('finance_button', 'assets/finance_sprite.png',282,193);
