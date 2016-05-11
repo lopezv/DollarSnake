@@ -7,7 +7,7 @@ var credit = 5000,
 	day = 1,
 	level = 1,
 	startX = 300, startY = 400,
-	serverUrl = 'http:/tsnk.xvm.mit.edu:5000',
+	serverUrl = 'http://tsnk.xvm.mit.edu:5000/',
 	powerupsUsed = 0,
 	avaliablePowerups = [],
 	powerupInfo = {
