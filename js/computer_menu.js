@@ -20,6 +20,10 @@ TurboSnake.Computer_Menu.prototype = {
         var button_buy = this.game.add.button(300, 200, 'buy_button', this.buy, this, 1, 0, 2);
         button_buy.scale.setTo(.5);
 
+        var button_leaderboard = this.game.add.button(200, 300, 'buy_button', this.leaders, this, 1, 0, 2);
+        button_leaderboard.scale.setTo(.5);
+
+
         this.cursors = {};
         this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
@@ -34,5 +38,9 @@ TurboSnake.Computer_Menu.prototype = {
     },
     buy: function() {
         this.game.state.start('Buy_Menu');
+    },
+    leaders: function() {
+        this.game.state.start('Leader_Menu');
     }
+
 };

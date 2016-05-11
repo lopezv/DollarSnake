@@ -25,7 +25,6 @@ TurboSnake.Menu.prototype = {
 
         var keys = Object.keys(powerupInfo);
         for (i = 0; i < keys.length; i++) {
-            console.log(powerupInfo[keys[i]]['count']);
             if (powerupInfo[keys[i]]['count'] > 0) {
                 if (empty){
                     powerup += powerupInfo[keys[i]]['name'];

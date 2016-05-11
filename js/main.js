@@ -7,7 +7,8 @@ var credit = 5000,
 	day = 1,
 	level = 1,
 	startX = 300, startY = 400,
-	serverUrl = 'http://127.0.0.1:5000',
+	serverUrl = 'http:/tsnk.xvm.mit.edu:5000',
+	powerupsUsed = 0,
 	avaliablePowerups = [],
 	powerupInfo = {
 		// TODO: implement EARLY CASH IN
@@ -52,4 +53,4 @@ TurboSnake.game.state.add('Game_Over', TurboSnake.Game_Over);
 
 
 getRandomPowerUps();
-TurboSnake.game.state.start('Leader_Menu');
+TurboSnake.game.state.start('Preload');

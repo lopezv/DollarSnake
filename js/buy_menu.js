@@ -87,6 +87,7 @@ TurboSnake.Buy_Menu.prototype = {
             this.disable();
             this.game.time.events.add(250, this.enable, this);
 
+            powerupsUsed += 1;
             powerupInfo[powerup].cost = Math.round(powerupInfo[powerup].cost * 1.1);
             powerupInfo[powerup].count += 1;
     	}

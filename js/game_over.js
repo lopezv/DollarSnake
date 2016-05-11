@@ -45,7 +45,6 @@ TurboSnake.Game_Over.prototype = {
         this.game.add.text(340, 350, '$ ' + earned_money, { font: "bold 15px sans-serif", fill: "#fff", align: "center" });
         this.game.add.text(210, 385, "NAME", { font: "bold 15px sans-serif", fill: "#46c0f9", align: "center"});
 
-
         // add spacebar
         this.cursors = this.input.keyboard.createCursorKeys();
         this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -68,12 +67,33 @@ TurboSnake.Game_Over.prototype = {
         // generate new powerups
         getRandomPowerUps();
 
-        // Change the state to the actual game.
-        this.state.start('Home');
+        this.submitToLeaderboard();
+
+        // increment day and level up
         day++;
         if (day % 4 == 0) {
             level++;
         }
+
+
+        // Change the state to the actual game.
+        this.state.start('Home');
+    },
+    submitToLeaderboard: function(){
+        var xmlhttp = new XMLHttpRequest(),
+            self=this,
+            data = {
+                name : document.getElementsByName('name')[0].value,
+                day : '' + day ,
+                powerups : '' + powerupsUsed,
+                score : '' + (credit-debt)
+            };
+
+        xmlhttp.open("POST", serverUrl, true);
+        var params = JSON.stringify(data);
+        //xmlhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+
+        xmlhttp.send(params);
     }
 
 };
