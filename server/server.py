@@ -5,16 +5,11 @@ from cross import crossdomain
 
 
 app = Flask(__name__)
-
-
-
-
-app.debug = True
-leaders = []
+leaders = {}
 
 def init():
 	for name in ['Bob', 'Eric', 'Jason', 'Victor', 'Tor', 'Katie', 'Lia', 'Yazmin', 'Rob Stark', 'AAA']:
-		info = {'name': name, 'day': randint(1,20), 'powerups': randint(1,20), 'score': randint(-60,50) * 1000}
+		info = {'name': name, 'day': randint(1,20), 'powerups': randint(1,20), 'score': randint(-60,50) * 1000, ip:None}
 		leaders.append(info);
 	return sorted(leaders, key=lambda x: int(x['score']),reverse=True)[:10]
 
@@ -25,9 +20,9 @@ def leaderboard():
     global leaders
     if request.method == 'POST':
       data = json.loads(request.data)
-      info = {'name': data['name'], 'day': data['day'], 'powerups': data['powerups'], 'score': data['score']}
+      info = {'name': data['name'], 'day': data['day'], 'powerups': data['powerups'], 'score': data['score'], request.remote_addr}
       leaders.append(info);
-      leaders = sorted(leaders, key=lambda x: int(x['score']),reverse=True)[:10]
+      leaders = sorted(leaders, key=lambda x: int(x['score']),reverse=True)
       return 'success'
     else:
     	ranks = dict((key, value) for (key, value) in enumerate(leaders))
