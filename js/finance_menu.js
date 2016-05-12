@@ -14,7 +14,8 @@ TurboSnake.Finance_Menu.prototype = {
     create: function() {
         this.game.stage.backgroundColor = '#061f27';
 
-        this.game.add.text(10,10, '<- Press space to go back.', this.style);        
+        var back = this.game.add.button(10, 10, 'back', this.back, this, 1, 0, 2);
+        back.scale.setTo(.4,.3);
 
         this.summary();
 
@@ -45,5 +46,8 @@ TurboSnake.Finance_Menu.prototype = {
         var debt_text = this.game.add.text(20,100, this.debtString, this.key_style);
         this.debtText = this.add.text(30 + debt_text.width,100, '-' + (debt).formatMoney(2), this.red);
 
+    },
+    back : function(){
+        this.game.state.start('Computer_Menu');
     }
 };

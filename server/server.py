@@ -16,7 +16,7 @@ def init():
 	for name in ['Bob', 'Eric', 'Jason', 'Victor', 'Tor', 'Katie', 'Lia', 'Yazmin', 'Rob Stark', 'AAA']:
 		info = {'name': name, 'day': randint(1,20), 'powerups': randint(1,20), 'score': randint(-60,50) * 1000}
 		leaders.append(info);
-	return sorted(leaders, key=lambda x: x['score'],reverse=True)[:10]
+	return sorted(leaders, key=lambda x: int(x['score']),reverse=True)[:10]
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -27,7 +27,7 @@ def leaderboard():
       data = json.loads(request.data)
       info = {'name': data['name'], 'day': data['day'], 'powerups': data['powerups'], 'score': data['score']}
       leaders.append(info);
-      leaders = sorted(leaders, key=lambda x: x['score'],reverse=True)[:10]
+      leaders = sorted(leaders, key=lambda x: int(x['score']),reverse=True)[:10]
       return 'success'
     else:
     	ranks = dict((key, value) for (key, value) in enumerate(leaders))
