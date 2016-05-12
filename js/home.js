@@ -103,6 +103,7 @@ TurboSnake.Home.prototype = {
     update: function () {
           
             this.physics.arcade.collide(this.snake, this.walls);
+            this.physics.arcade.collide(this.snake, this.objects);            
             if(this.physics.arcade.collide(this.snake, this.computer)){
 		        this.state.start('Computer_Menu');
             }
