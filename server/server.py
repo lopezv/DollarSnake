@@ -9,11 +9,12 @@ leaders = {}
 
 
 def init():
+  i = 0
 	for name in ['Bob', 'Eric', 'Jason', 'Victor', 'Tor', 'Katie', 'Lia', 'Yazmin', 'Rob Stark', 'AAA']:
 		info = {'name': name, 'day': randint(1,20), 'powerups': randint(1,20), 'score': randint(-60,50) * 1000, ip:None}
-		leaders.append(info);
-	return sorted(leaders, key=lambda x: int(x['score']),reverse=True)[:10]
-
+		leaders[i] = info
+    i++
+  return
 
 @app.route('/', methods=['GET', 'POST'])
 @crossdomain(origin='*')
@@ -21,14 +22,19 @@ def leaderboard():
     global leaders
     if request.method == 'POST':
       data = json.loads(request.data)
-      info = {'name': data['name'], 'day': data['day'], 'powerups': data['powerups'], 'score': data['score'], request.remote_addr}
-      leaders.append(info);
-      leaders = sorted(leaders, key=lambda x: int(x['score']),reverse=True)
+      ip = request.remote_addr
+      info = {'name': data['name'], 'day': data['day'], 'powerups': data['powerups'], 'score': data['score']}
+      leaders[ip] = info
       return 'success'
     else:
-    	ranks = dict((key, value) for (key, value) in enumerate(leaders))
+      top10 = sorted(leaders, key=lambda x: int(x['score']),reverse=True)
+    	ranks = dict((key, value) for (key, value) in enumerate(top10))
     	return json.dumps(ranks)
 
 if __name__ == '__main__':
-	leaders = init()
+	init()
 	app.run(host='0.0.0.0')
+
+
+
+
