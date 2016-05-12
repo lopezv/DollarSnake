@@ -13,7 +13,8 @@ TurboSnake.Leader_Menu = function() {
 TurboSnake.Leader_Menu.prototype = {
     create: function() {
         this.game.stage.backgroundColor = '#061f27';
-        this.game.add.text(10,10, '<- Press space to go back.', this.object_style);        
+        var back = this.game.add.button(10, 10, 'back', this.back, this, 1, 0, 2);
+        back.scale.setTo(.4,.3);
 
         this.game.add.text(25,10 + 60  , 'Name', this.key_style);
         this.game.add.text(225,10 + 60  , 'Days' , this.key_style);
@@ -40,7 +41,7 @@ TurboSnake.Leader_Menu.prototype = {
     },
     update: function() {
         if(this.cursors.space.isDown) {
-            this.game.state.start('Computer_Menu');
+            this.back();
         }
     },
     pay_debt: function() {
@@ -58,5 +59,8 @@ TurboSnake.Leader_Menu.prototype = {
             i++;
         };
 
+    },
+    back: function(){
+        this.game.state.start('Computer_Menu');
     }
 };
