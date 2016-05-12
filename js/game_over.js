@@ -48,11 +48,13 @@ TurboSnake.Game_Over.prototype = {
         // add spacebar
         this.cursors = this.input.keyboard.createCursorKeys();
         this.cursors.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.cursors.enter = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+
     },
     
     update: function() {
         // Start on space down
-        if(this.cursors.space.isDown){
+        if(this.cursors.space.isDown || this.cursors.enter.isDown){
             this.startGame();
         }
     },
