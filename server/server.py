@@ -6,10 +6,10 @@ from cross import crossdomain
 
 app = Flask(__name__)
 
+app
 
 
-
-app.debug = True
+#app.debug = True
 leaders = []
 
 def init():
@@ -35,4 +35,4 @@ def leaderboard():
 
 if __name__ == '__main__':
 	leaders = init()
-	app.run()
+	app.run(host='0.0.0.0')
