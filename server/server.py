@@ -13,8 +13,7 @@ def init():
 	for name in ['Bob', 'Eric', 'Jason', 'Victor', 'Tor', 'Katie', 'Lia', 'Yazmin', 'Rob Stark', 'AAA']:
 		info = {'name': name, 'day': randint(1,20), 'powerups': randint(1,20), 'score': randint(-60,50) * 1000, ip:None}
 		leaders[i] = info
-    i++
-  return
+    i += 1
 
 @app.route('/', methods=['GET', 'POST'])
 @crossdomain(origin='*')

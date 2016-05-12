@@ -55,7 +55,7 @@ TurboSnake.Home.prototype = {
 
     },
     move: function(){
-    	var speed = min(150 * (.1*day + 1),300);
+    	var speed = Math.min(150 * (.1*day + 1),300);
 	    this.snake.body.velocity.x = 0;
 	    this.snake.body.velocity.y = 0;
 
