@@ -32,9 +32,11 @@ TurboSnake.Home.prototype = {
             this.floor = this.map.createLayer('Tile Layer 1');
             this.walls = this.map.createLayer('Tile Layer 2');
             this.computer = this.map.createLayer('Tile Layer 3');
+            this.objects = this.map.createLayer('Tile Layer 4');
 
             this.map.setCollisionByExclusion([0],true,this.walls);
             this.map.setCollisionByExclusion([0],true,this.computer);
+            this.map.setCollisionByExclusion([0],true,this.objects);
 
             this.createHeader();
 
@@ -53,7 +55,7 @@ TurboSnake.Home.prototype = {
 
     },
     move: function(){
-    	var speed = 150 * (.1*day + 1);
+    	var speed = min(150 * (.1*day + 1),300);
 	    this.snake.body.velocity.x = 0;
 	    this.snake.body.velocity.y = 0;
 
